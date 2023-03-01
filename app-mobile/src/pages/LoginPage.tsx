@@ -10,7 +10,7 @@ import React from "react";
 import Button from "@components/Button";
 import { Octicons } from "@expo/vector-icons";
 
-const LoginrPage = () => {
+const LoginPage = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
@@ -86,7 +86,7 @@ const LoginrPage = () => {
   );
 };
 
-export default LoginrPage;
+export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {

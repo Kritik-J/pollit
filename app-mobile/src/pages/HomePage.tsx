@@ -2,7 +2,6 @@ import { FlatList, StatusBar, StyleSheet, View } from "react-native";
 import React from "react";
 import PollListItem from "@components/PollListItem";
 import { polls } from "@assets/data/polls";
-import Button from "@components/Button";
 
 const HomePage = () => {
   return (

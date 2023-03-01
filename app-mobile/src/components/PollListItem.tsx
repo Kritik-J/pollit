@@ -30,11 +30,10 @@ const PollListItem = (props: PollListItemProps) => {
     >
       <Text style={styles.title}>{poll.title}</Text>
 
-      <Text>Created by: @{poll.user.userName}</Text>
+      <Text>Created by:&nbsp;@{poll.user.userName}</Text>
 
       <Text>
-        Created at:
-        {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
+        Created at:&nbsp;{dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
       </Text>
     </View>
   );
