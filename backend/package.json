@@ -1,0 +1,36 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "PaaS for college festivals",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "ts-node --esm ./src/server.ts",
+    "dev": "nodemon --exec node --loader ts-node/esm src/server.ts",
+    "build": "tsc -p ."
+  },
+  "author": "Bhagya Patel, Kritik Jiyaviya",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.9.0",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/express": "^4.17.16",
+    "@types/jsonwebtoken": "^9.0.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.3",
+    "prisma": "^4.9.0",
+    "ts-node": "^10.9.1"
+  }
+}
