@@ -1,14 +1,19 @@
-import LoginPage from "@src/pages/LoginPage";
+import store from "@src/redux/store";
 import { StatusBar } from "expo-status-bar";
+import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Provider } from "react-redux";
+import LoginPage from "@src/pages/LoginPage";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <LoginPage />
+    <Provider store={store}>
+      <View style={styles.container}>
+        <StatusBar style='auto' />
 
-      <StatusBar style='auto' />
-    </View>
+        <LoginPage />
+      </View>
+    </Provider>
   );
 }
 

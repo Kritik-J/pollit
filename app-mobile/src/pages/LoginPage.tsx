@@ -9,18 +9,26 @@ import {
 import React from "react";
 import Button from "@components/Button";
 import { Octicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
+  const { theme } = useSelector((state: any) => state.ui);
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={{
+        ...styles.container,
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
       <Text style={styles.text}>Enter your email address to login</Text>
 
       <View style={styles.inputContainer}>
