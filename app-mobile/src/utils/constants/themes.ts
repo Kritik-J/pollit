@@ -1,4 +1,4 @@
-export const LIGHT_BACKGROUND_COLOR = '#F0EEED';
+export const LIGHT_BACKGROUND_COLOR = '#ffffff';
 export const DARK_BACKGROUND_COLOR = '#332C39';
 
 export const LIGHT_MODE = 'light';
