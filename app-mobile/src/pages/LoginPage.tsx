@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  StatusBar,
-  TextInput,
-  View,
-} from "react-native";
+import { StyleSheet, Text, ScrollView, StatusBar, View } from "react-native";
 import React from "react";
 import Button from "@components/Button";
 import { Octicons } from "@expo/vector-icons";
@@ -30,10 +23,10 @@ const LoginPage = () => {
         backgroundColor: theme.backgroundColor,
       }}
     >
-      <Text style={styles.text}>Enter your email address to login</Text>
+      <Text style={styles.text}>Welcome to Pollit</Text>
 
       <FormInput
-        placeholder='Email'
+        placeholder='Username or Email'
         containerStyle={{ marginBottom: 10 }}
         value={email}
         onChangeText={setEmail}
@@ -48,7 +41,7 @@ const LoginPage = () => {
         secureTextEntry={!showPassword}
         trailingIcon={
           <Octicons
-            name={showPassword ? "eye" : "eye-closed"}
+            name={showPassword ? "eye-closed" : "eye"}
             size={24}
             color='black'
             onPress={toggleShowPassword}

@@ -19,6 +19,7 @@ type FormInputProps = {
   onChangeText?: (text: string) => void;
   secureTextEntry?: boolean;
   keyboardType?: any;
+  InputProps?: any;
 };
 
 const FormInput = (Props: FormInputProps) => {
@@ -40,6 +41,7 @@ const FormInput = (Props: FormInputProps) => {
     onChangeText,
     secureTextEntry = false,
     keyboardType = "default",
+    InputProps,
   } = Props;
 
   return (
@@ -73,6 +75,7 @@ const FormInput = (Props: FormInputProps) => {
         }}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
+        {...InputProps}
       />
 
       {trailingIcon && trailingIcon}
