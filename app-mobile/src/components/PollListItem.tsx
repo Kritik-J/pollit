@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
 import React from "react";
 import dayjs from "dayjs";
 
@@ -20,22 +20,26 @@ const PollListItem = (props: PollListItemProps) => {
   const { poll, isLast } = props;
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          borderBottomWidth: isLast ? 0 : 4,
-        },
-      ]}
+    <TouchableNativeFeedback
+      background={TouchableNativeFeedback.Ripple("rgba(0, 0, 0, 0.1)", false)}
     >
-      <Text style={styles.title}>{poll.title}</Text>
+      <View
+        style={[
+          styles.container,
+          {
+            borderBottomWidth: isLast ? 0 : 1,
+          },
+        ]}
+      >
+        <Text style={styles.title}>{poll.title}</Text>
 
-      <Text>Created by:&nbsp;@{poll.user.userName}</Text>
+        <Text style={styles.username}>@{poll.user.userName}</Text>
 
-      <Text>
-        Created at:&nbsp;{dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
-      </Text>
-    </View>
+        <Text style={styles.date}>
+          {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
+        </Text>
+      </View>
+    </TouchableNativeFeedback>
   );
 };
 
@@ -43,7 +47,6 @@ export default PollListItem;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
     borderBottomColor: "lightgray",
     padding: 10,
   },
@@ -52,5 +55,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "black",
+    marginBottom: 10,
+  },
+
+  username: {
+    fontSize: 16,
+    color: "blue",
+    marginBottom: 10,
+  },
+
+  date: {
+    fontSize: 14,
+    color: "gray",
   },
 });

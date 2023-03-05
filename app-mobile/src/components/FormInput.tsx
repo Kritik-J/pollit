@@ -3,6 +3,8 @@ import React from "react";
 
 type FormInputProps = {
   placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
   borderRadius?: number;
   borderWidth?: number;
   borderColor?: string;
@@ -15,8 +17,6 @@ type FormInputProps = {
   inputStyle?: any;
   leadingIcon?: any;
   trailingIcon?: any;
-  value: string;
-  onChangeText?: (text: string) => void;
   secureTextEntry?: boolean;
   keyboardType?: any;
   InputProps?: any;

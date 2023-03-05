@@ -43,5 +43,60 @@ export const polls = [
             userName: 'johndoe',
         },
         createdAt: '2022-03-01T00:00:00.000Z',
+    },
+    {
+        id: 4,
+        title: 'What is your favorite movie?',
+        inputType: 'text',
+        user: {
+            id: 1,
+            name: 'John Doe',
+            userName: 'johndoe',
+        },
+        createdAt: '2022-03-01T00:00:00.000Z',
+    },
+    {
+        id: 5,
+        title: 'What is your favorite book?',
+        inputType: 'text',
+        user: {
+            id: 1,
+            name: 'John Doe',
+            userName: 'johndoe',
+        },
+        createdAt: '2022-03-01T00:00:00.000Z',
+    },
+    {
+        id: 6,
+        title: 'What is your favorite sport?',
+        inputType: 'text',
+        user: {
+            id: 1,
+            name: 'John Doe',
+            userName: 'johndoe',
+        },
+        createdAt: '2022-03-01T00:00:00.000Z',
+    },
+    {
+        id: 7,
+        title: 'What is your favorite game?',
+        inputType: 'text',
+        user: {
+            id: 1,
+            name: 'John Doe',
+            userName: 'johndoe',
+        },
+        createdAt: '2022-03-01T00:00:00.000Z',
+    },
+    {
+        id: 8,
+        title: 'What is your favorite music?',
+        inputType: 'text',
+        user: {
+            id: 1,
+            name: 'John Doe',
+            userName: 'johndoe',
+        },
+        createdAt: '2022-03-01T00:00:00.000Z',
     }
 ];
