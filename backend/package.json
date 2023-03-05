@@ -16,7 +16,8 @@
     "@types/jsonwebtoken": "^9.0.1",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.49.0",
