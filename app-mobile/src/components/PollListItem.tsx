@@ -53,14 +53,14 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: "black",
     marginBottom: 10,
   },
 
   username: {
     fontSize: 16,
-    color: "blue",
+    color: "#3F497F",
     marginBottom: 10,
   },
 
