@@ -1,5 +1,6 @@
 import { TextInput, View } from "react-native";
 import React from "react";
+import { useSelector } from "react-redux";
 
 type FormInputProps = {
   placeholder: string;
@@ -20,6 +21,7 @@ type FormInputProps = {
   secureTextEntry?: boolean;
   keyboardType?: any;
   InputProps?: any;
+  status?: "error" | "success" | "warning" | "info";
 };
 
 const FormInput = (Props: FormInputProps) => {
@@ -42,7 +44,25 @@ const FormInput = (Props: FormInputProps) => {
     secureTextEntry = false,
     keyboardType = "default",
     InputProps,
+    status,
   } = Props;
+
+  const { theme } = useSelector((state: any) => state.ui);
+
+  const statusStyle = (status: "error" | "success" | "warning" | "info") => {
+    switch (status) {
+      case "error":
+        return theme.errorColor;
+      case "success":
+        return theme.successColor;
+      case "warning":
+        return theme.warningColor;
+      case "info":
+        return theme.infoColor;
+      default:
+        return "black";
+    }
+  };
 
   return (
     <View
@@ -50,8 +70,8 @@ const FormInput = (Props: FormInputProps) => {
         borderRadius,
         alignItems: "center",
         flexDirection: "row",
-        borderWidth,
-        borderColor,
+        borderWidth: status ? 2 : borderWidth,
+        borderColor: status ? statusStyle(status) : borderColor,
         backgroundColor,
         ...containerStyle,
       }}
@@ -66,6 +86,7 @@ const FormInput = (Props: FormInputProps) => {
           flex: 1,
           fontSize,
           fontWeight,
+          // color: status ? statusStyle(status) : fontColor,
           color: fontColor,
           ...inputStyle,
         }}
