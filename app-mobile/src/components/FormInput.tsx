@@ -6,6 +6,7 @@ type FormInputProps = {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  onKeyPress?: (event: any) => void;
   borderRadius?: number;
   borderWidth?: number;
   borderColor?: string;
@@ -41,6 +42,7 @@ const FormInput = (Props: FormInputProps) => {
     inputStyle,
     value,
     onChangeText,
+    onKeyPress,
     secureTextEntry = false,
     keyboardType = "default",
     InputProps,
@@ -94,6 +96,7 @@ const FormInput = (Props: FormInputProps) => {
         onChangeText={(text: string) => {
           onChangeText && onChangeText(text);
         }}
+        onKeyPress={onKeyPress}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         {...InputProps}

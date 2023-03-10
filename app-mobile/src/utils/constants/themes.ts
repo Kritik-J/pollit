@@ -1,5 +1,5 @@
 export const LIGHT_BACKGROUND_COLOR = '#ffffff';
-export const DARK_BACKGROUND_COLOR = '#332C39';
+export const DARK_BACKGROUND_COLOR = '#171717';
 export const ERROR_COLOR = '#f3405e';
 export const WARNING_COLOR = '#f7a90d';
 export const INFO_COLOR = '#12b2e8';

@@ -46,7 +46,7 @@ const LoginPage = () => {
             color='black'
             onPress={toggleShowPassword}
             style={{
-              padding: 10,
+              marginRight: 10,
             }}
           />
         }
