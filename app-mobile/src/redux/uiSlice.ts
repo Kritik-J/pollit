@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DARK_MODE, DARK_THEME, LIGHT_MODE, LIGHT_THEME } from '@src/utils/constants/themes';
+import { DARK_MODE, LIGHT_MODE, THEMES } from '@src/utils/constants/themes';
 
 export const uiSlice = createSlice({
     name: 'ui',
     initialState: {
         mode: LIGHT_MODE,
-        theme: LIGHT_THEME
+        theme: THEMES[LIGHT_MODE],
     },
 
     reducers: {
         setTheme: (state, action) => {
             state.mode = action.payload;
-            state.theme = action.payload === LIGHT_MODE ? LIGHT_THEME: DARK_THEME ;
+            state.theme = action.payload === LIGHT_MODE ?  THEMES[LIGHT_MODE] : THEMES[DARK_MODE];
         }
     },
 });

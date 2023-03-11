@@ -4,6 +4,8 @@ import React from "react";
 type ButtonProps = {
   title: string;
   onPress: () => void;
+  height?: number | string;
+  width?: string | number;
   backgroundColor?: string;
   borderRadius?: number;
   borderWidth?: number;
@@ -22,10 +24,12 @@ const Button = (props: ButtonProps) => {
   const {
     title,
     onPress,
-    backgroundColor = "#000",
+    height = 48,
+    width = "100%",
+    backgroundColor = "black",
     borderRadius = 5,
-    borderWidth = 1,
-    borderColor = backgroundColor,
+    borderWidth = 0,
+    borderColor = "black",
     loading = false,
     disabled = false,
     fontSize = 16,
@@ -38,11 +42,12 @@ const Button = (props: ButtonProps) => {
   return (
     <Pressable
       style={{
+        height,
+        width,
         backgroundColor,
         borderRadius,
         borderWidth,
         borderColor,
-        padding: 10,
         justifyContent: "center",
         alignItems: "center",
         opacity: disabled ? 0.85 : 1,

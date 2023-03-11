@@ -23,3 +23,8 @@ export const DARK_THEME = {
     infoColor: INFO_COLOR,
     successColor: SUCCESS_COLOR,
 };
+
+export const THEMES = {
+    [LIGHT_MODE]: LIGHT_THEME,
+    [DARK_MODE]: DARK_THEME,
+};

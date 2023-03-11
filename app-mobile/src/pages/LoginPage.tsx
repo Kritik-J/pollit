@@ -4,6 +4,7 @@ import Button from "@components/Button";
 import { Octicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import FormInput from "@src/components/FormInput";
+import Typography from "@src/components/Typography";
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState<string>("");
@@ -23,19 +24,27 @@ const LoginPage = () => {
         backgroundColor: theme.backgroundColor,
       }}
     >
-      <Text style={styles.text}>Welcome to Pollit</Text>
+      <Typography variant='h1'>Welcome to PollIt</Typography>
+
+      <View style={{ height: 5 }} />
+
+      <Typography variant='h3' style={{ color: "grey" }}>
+        Login to your account
+      </Typography>
+
+      <View style={{ height: 30 }} />
 
       <FormInput
         placeholder='Username or Email'
-        containerStyle={{ marginBottom: 10 }}
         value={email}
         onChangeText={setEmail}
         keyboardType='email-address'
       />
 
+      <View style={{ height: 10 }} />
+
       <FormInput
         placeholder='Password'
-        containerStyle={{ marginBottom: 10 }}
         value={password}
         onChangeText={setPassword}
         secureTextEntry={!showPassword}
@@ -52,7 +61,9 @@ const LoginPage = () => {
         }
       />
 
-      <View style={{ marginBottom: 20 }}>
+      <View style={{ height: 10 }} />
+
+      <View>
         <Text
           style={{ textAlign: "right" }}
           onPress={() => console.log("Forgot password?")}
@@ -61,14 +72,17 @@ const LoginPage = () => {
         </Text>
       </View>
 
+      <View style={{ height: 20 }} />
+
       <Button
         title='Login'
         onPress={() => {
           console.log("Email: ", email);
           console.log("Password: ", password);
         }}
-        buttonStyle={{ marginBottom: 10 }}
       />
+
+      <View style={{ height: 10 }} />
 
       <Button
         title='Register'
@@ -76,8 +90,8 @@ const LoginPage = () => {
           console.log("Register");
         }}
         backgroundColor='white'
-        borderColor='black'
         fontColor='black'
+        borderWidth={1}
       />
     </ScrollView>
   );
@@ -90,11 +104,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: StatusBar.currentHeight || 0,
     padding: 10,
-  },
-
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
   },
 });

@@ -72,7 +72,7 @@ const FormInput = (Props: FormInputProps) => {
         borderRadius,
         alignItems: "center",
         flexDirection: "row",
-        borderWidth: status ? 2 : borderWidth,
+        borderWidth: borderWidth,
         borderColor: status ? statusStyle(status) : borderColor,
         backgroundColor,
         ...containerStyle,
