@@ -1,6 +1,6 @@
 import { TextInput, View } from "react-native";
 import React from "react";
-import { useSelector } from "react-redux";
+import useTheme from "@src/hooks/useTheme";
 
 type FormInputProps = {
   placeholder: string;
@@ -26,18 +26,20 @@ type FormInputProps = {
 };
 
 const FormInput = (Props: FormInputProps) => {
+  const { theme } = useTheme();
+
   const {
     placeholder,
     leadingIcon,
     trailingIcon,
     borderRadius = 5,
     borderWidth = 1,
-    borderColor = "black",
-    backgroundColor = "white",
+    borderColor = theme.colors.textInputBorderColor,
+    backgroundColor = "transparent",
     placeholderTextColor = "grey",
     fontSize = 14,
     fontWeight = "normal",
-    fontColor = "black",
+    fontColor = theme.colors.textInputFontColor,
     containerStyle,
     inputStyle,
     value,
@@ -49,20 +51,18 @@ const FormInput = (Props: FormInputProps) => {
     status,
   } = Props;
 
-  const { theme } = useSelector((state: any) => state.ui);
-
   const statusStyle = (status: "error" | "success" | "warning" | "info") => {
     switch (status) {
       case "error":
-        return theme.errorColor;
+        return theme.colors.errorColor;
       case "success":
-        return theme.successColor;
+        return theme.colors.successColor;
       case "warning":
-        return theme.warningColor;
+        return theme.colors.warningColor;
       case "info":
-        return theme.infoColor;
+        return theme.colors.infoColor;
       default:
-        return "black";
+        return theme.colors.textInputBorderColor;
     }
   };
 

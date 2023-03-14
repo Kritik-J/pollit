@@ -2,26 +2,26 @@ import { StyleSheet, Text, ScrollView, StatusBar, View } from "react-native";
 import React from "react";
 import Button from "@components/Button";
 import { Octicons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
 import FormInput from "@src/components/FormInput";
 import Typography from "@src/components/Typography";
+import useTheme from "@src/hooks/useTheme";
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
-  const { theme } = useSelector((state: any) => state.ui);
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const { theme } = useTheme();
 
   return (
     <ScrollView
       contentContainerStyle={{
         ...styles.container,
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.colors.backgroundColor,
       }}
     >
       <Typography variant='h1'>Welcome to PollIt</Typography>
@@ -52,7 +52,7 @@ const LoginPage = () => {
           <Octicons
             name={showPassword ? "eye-closed" : "eye"}
             size={24}
-            color='black'
+            color={theme.colors.textInputIconColor}
             onPress={toggleShowPassword}
             style={{
               marginRight: 10,
@@ -63,14 +63,14 @@ const LoginPage = () => {
 
       <View style={{ height: 10 }} />
 
-      <View>
-        <Text
-          style={{ textAlign: "right" }}
-          onPress={() => console.log("Forgot password?")}
-        >
-          Forgot password?
-        </Text>
-      </View>
+      <Typography
+        variant='body'
+        style={{
+          textAlign: "right",
+        }}
+      >
+        Forgot Password?
+      </Typography>
 
       <View style={{ height: 20 }} />
 
@@ -89,9 +89,8 @@ const LoginPage = () => {
         onPress={() => {
           console.log("Register");
         }}
-        backgroundColor='white'
-        fontColor='black'
-        borderWidth={1}
+        backgroundColor='transparent'
+        fontColor={theme.colors.secondaryButtonTextColor}
       />
     </ScrollView>
   );

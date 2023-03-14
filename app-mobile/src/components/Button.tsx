@@ -1,5 +1,6 @@
 import { ActivityIndicator, Pressable, Text } from "react-native";
 import React from "react";
+import useTheme from "@src/hooks/useTheme";
 
 type ButtonProps = {
   title: string;
@@ -21,20 +22,22 @@ type ButtonProps = {
 };
 
 const Button = (props: ButtonProps) => {
+  const { theme } = useTheme();
+
   const {
     title,
     onPress,
     height = 48,
     width = "100%",
-    backgroundColor = "black",
+    backgroundColor = theme.colors.primaryButtonColor,
     borderRadius = 5,
-    borderWidth = 0,
-    borderColor = "black",
+    borderWidth = 1,
+    borderColor = theme.colors.primaryButtonColor,
     loading = false,
     disabled = false,
     fontSize = 16,
-    fontColor = "#fff",
-    spinnerColor = "#fff",
+    fontColor = theme.colors.primaryButtonTextColor,
+    spinnerColor = theme.colors.primaryButtonTextColor,
     buttonStyle,
     textStyle,
   } = props;

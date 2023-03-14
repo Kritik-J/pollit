@@ -1,3 +1,4 @@
+import useTheme from "@src/hooks/useTheme";
 import React from "react";
 import { Text } from "react-native";
 
@@ -7,7 +8,15 @@ type TypographyProps = {
   style?: any;
 };
 
-const Typography = ({ variant, children, style }: TypographyProps) => {
+const Typography = (props: TypographyProps) => {
+  const { theme } = useTheme();
+
+  const { variant, children, style } = props;
+
+  const fixedStyles = {
+    color: theme.colors.fontColor,
+  };
+
   let textStyle = {};
 
   switch (variant) {
@@ -27,7 +36,7 @@ const Typography = ({ variant, children, style }: TypographyProps) => {
       textStyle = styles.body;
   }
 
-  return <Text style={[textStyle, style]}>{children}</Text>;
+  return <Text style={[textStyle, style, fixedStyles]}>{children}</Text>;
 };
 
 const styles = {
