@@ -28,7 +28,12 @@ const LoginPage = () => {
 
       <View style={{ height: 5 }} />
 
-      <Typography variant='h3' style={{ color: "grey" }}>
+      <Typography
+        variant='h3'
+        style={{
+          color: "grey",
+        }}
+      >
         Login to your account
       </Typography>
 

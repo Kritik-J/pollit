@@ -3,19 +3,13 @@ import React from "react";
 import { Text } from "react-native";
 
 type TypographyProps = {
-  variant: "h1" | "h2" | "h3" | "body";
+  variant: "h1" | "h2" | "h3" | "h4" | "body";
   children: React.ReactNode;
   style?: any;
 };
 
-const Typography = (props: TypographyProps) => {
+const Typography = ({ variant, children, style }: TypographyProps) => {
   const { theme } = useTheme();
-
-  const { variant, children, style } = props;
-
-  const fixedStyles = {
-    color: theme.colors.fontColor,
-  };
 
   let textStyle = {};
 
@@ -29,6 +23,9 @@ const Typography = (props: TypographyProps) => {
     case "h3":
       textStyle = styles.h3;
       break;
+    case "h4":
+      textStyle = styles.h4;
+      break;
     case "body":
       textStyle = styles.body;
       break;
@@ -36,7 +33,19 @@ const Typography = (props: TypographyProps) => {
       textStyle = styles.body;
   }
 
-  return <Text style={[textStyle, style, fixedStyles]}>{children}</Text>;
+  return (
+    <Text
+      style={[
+        textStyle,
+        {
+          color: theme.colors.fontColor,
+        },
+        style,
+      ]}
+    >
+      {children}
+    </Text>
+  );
 };
 
 const styles = {
@@ -52,8 +61,12 @@ const styles = {
     fontSize: 18,
     fontWeight: "600",
   },
-  body: {
+  h4: {
     fontSize: 16,
+    fontWeight: "600",
+  },
+  body: {
+    fontSize: 14,
   },
 };
 
