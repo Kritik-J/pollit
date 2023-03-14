@@ -35,7 +35,7 @@ const Button = (props: ButtonProps) => {
     borderColor = theme.colors.primaryButtonColor,
     loading = false,
     disabled = false,
-    fontSize = 16,
+    fontSize = 14,
     fontColor = theme.colors.primaryButtonTextColor,
     spinnerColor = theme.colors.primaryButtonTextColor,
     buttonStyle,
