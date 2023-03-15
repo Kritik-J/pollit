@@ -7,6 +7,8 @@ import useTheme from "@src/hooks/useTheme";
 import { useDispatch } from "react-redux";
 import { setTheme } from "@src/redux/uiSlice";
 import { StatusBar } from "expo-status-bar";
+import HomePage from "@src/pages/HomePage";
+import RegisterPage from "@src/pages/RegisterPage";
 
 const Navigation = () => {
   const Stack = createStackNavigator();
@@ -32,6 +34,10 @@ const Navigation = () => {
         initialRouteName='Login'
       >
         <Stack.Screen name='Login' component={LoginPage} />
+
+        <Stack.Screen name='Register' component={RegisterPage} />
+
+        <Stack.Screen name='Home' component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

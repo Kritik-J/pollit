@@ -1,10 +1,17 @@
-import { StyleSheet, Text, ScrollView, StatusBar, View } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  View,
+  SafeAreaView,
+} from "react-native";
 import React from "react";
 import Button from "@components/Button";
 import { Octicons } from "@expo/vector-icons";
 import FormInput from "@src/components/FormInput";
 import Typography from "@src/components/Typography";
 import useTheme from "@src/hooks/useTheme";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState<string>("");
@@ -17,87 +24,98 @@ const LoginPage = () => {
 
   const { theme } = useTheme();
 
+  const nav = useNavigation();
+
+  function navigateToRegister() {
+    nav.navigate("Register" as never);
+  }
+
   return (
-    <ScrollView
-      contentContainerStyle={{
-        ...styles.container,
+    <SafeAreaView
+      style={{
+        flex: 1,
         backgroundColor: theme.colors.backgroundColor,
       }}
     >
-      <Typography variant='h1'>Welcome to PollIt</Typography>
-
-      <View style={{ height: 5 }} />
-
-      <Typography
-        variant='h3'
-        style={{
-          color: "grey",
+      <ScrollView
+        contentContainerStyle={{
+          ...styles.container,
+          backgroundColor: theme.colors.backgroundColor,
         }}
       >
-        Login to your account
-      </Typography>
+        <Typography variant='h1'>Welcome to PollIt</Typography>
 
-      <View style={{ height: 30 }} />
+        <View style={{ height: 5 }} />
 
-      <FormInput
-        placeholder='Username or Email'
-        value={email}
-        onChangeText={setEmail}
-        keyboardType='email-address'
-      />
+        <Typography
+          variant='h3'
+          style={{
+            color: "grey",
+          }}
+        >
+          Login to your account
+        </Typography>
 
-      <View style={{ height: 10 }} />
+        <View style={{ height: 30 }} />
 
-      <FormInput
-        placeholder='Password'
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={!showPassword}
-        trailingIcon={
-          <Octicons
-            name={showPassword ? "eye-closed" : "eye"}
-            size={24}
-            color={theme.colors.textInputIconColor}
-            onPress={toggleShowPassword}
-            style={{
-              marginRight: 10,
-            }}
-          />
-        }
-      />
+        <FormInput
+          placeholder='Username or Email'
+          value={email}
+          onChangeText={setEmail}
+          keyboardType='email-address'
+        />
 
-      <View style={{ height: 10 }} />
+        <View style={{ height: 10 }} />
 
-      <Typography
-        variant='body'
-        style={{
-          textAlign: "right",
-        }}
-      >
-        Forgot Password?
-      </Typography>
+        <FormInput
+          placeholder='Password'
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+          trailingIcon={
+            <Octicons
+              name={showPassword ? "eye-closed" : "eye"}
+              size={24}
+              color={theme.colors.textInputIconColor}
+              onPress={toggleShowPassword}
+              style={{
+                marginRight: 10,
+              }}
+            />
+          }
+        />
 
-      <View style={{ height: 20 }} />
+        <View style={{ height: 10 }} />
 
-      <Button
-        title='Login'
-        onPress={() => {
-          console.log("Email: ", email);
-          console.log("Password: ", password);
-        }}
-      />
+        <Typography
+          variant='body'
+          style={{
+            textAlign: "right",
+          }}
+        >
+          Forgot Password?
+        </Typography>
 
-      <View style={{ height: 10 }} />
+        <View style={{ height: 20 }} />
 
-      <Button
-        title='Register'
-        onPress={() => {
-          console.log("Register");
-        }}
-        backgroundColor='transparent'
-        fontColor={theme.colors.secondaryButtonTextColor}
-      />
-    </ScrollView>
+        <Button
+          title='Login'
+          onPress={() => {
+            console.log("Email: ", email);
+            console.log("Password: ", password);
+          }}
+        />
+
+        <View style={{ height: 10 }} />
+
+        <Button
+          title='Register'
+          onPress={navigateToRegister}
+          backgroundColor={theme.colors.secondaryButtonColor}
+          fontColor={theme.colors.secondaryButtonTextColor}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -106,7 +124,7 @@ export default LoginPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight || 0,
+    paddingTop: (StatusBar.currentHeight as number) + 10 || 0,
     padding: 10,
   },
 });
