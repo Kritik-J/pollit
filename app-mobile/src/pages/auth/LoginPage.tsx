@@ -4,6 +4,7 @@ import {
   StatusBar,
   View,
   SafeAreaView,
+  Text,
 } from "react-native";
 import React from "react";
 import Button from "@components/Button";
@@ -106,14 +107,22 @@ const LoginPage = () => {
           }}
         />
 
-        <View style={{ height: 10 }} />
+        <View style={{ height: 40 }} />
 
-        <Button
-          title='Register'
-          onPress={navigateToRegister}
-          backgroundColor={theme.colors.secondaryButtonColor}
-          fontColor={theme.colors.secondaryButtonTextColor}
-        />
+        <Typography
+          variant='body'
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Don't have an account?{" "}
+          <Text
+            style={{ color: theme.colors.highlightColor }}
+            onPress={navigateToRegister}
+          >
+            Register
+          </Text>
+        </Typography>
       </ScrollView>
     </SafeAreaView>
   );

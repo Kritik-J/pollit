@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
 import React from "react";
 import dayjs from "dayjs";
+import Typography from "./Typography";
 
 type PollListItemProps = {
   poll: {
@@ -31,13 +32,17 @@ const PollListItem = (props: PollListItemProps) => {
           },
         ]}
       >
-        <Text style={styles.title}>{poll.title}</Text>
+        <Typography variant='h3' style={styles.title}>
+          {poll.title}
+        </Typography>
 
-        <Text style={styles.username}>@{poll.user.userName}</Text>
+        <Typography variant='body' style={styles.username}>
+          @{poll.user.userName}
+        </Typography>
 
-        <Text style={styles.date}>
+        <Typography variant='body' style={styles.date}>
           {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
-        </Text>
+        </Typography>
       </View>
     </TouchableNativeFeedback>
   );
@@ -49,6 +54,7 @@ const styles = StyleSheet.create({
   container: {
     borderBottomColor: "lightgray",
     padding: 10,
+    backgroundColor: "#fff",
   },
 
   title: {
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
 
   username: {
     fontSize: 16,
-    color: "#3F497F",
+    color: "blue",
     marginBottom: 10,
   },
 

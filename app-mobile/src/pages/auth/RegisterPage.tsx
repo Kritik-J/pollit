@@ -11,11 +11,17 @@ import Button from "@components/Button";
 import FormInput from "@src/components/FormInput";
 import Typography from "@src/components/Typography";
 import useTheme from "@src/hooks/useTheme";
+import { useNavigation } from "@react-navigation/native";
 
 const RegisterPage = () => {
+  const { theme } = useTheme();
   const [email, setEmail] = React.useState<string>("");
 
-  const { theme } = useTheme();
+  const nav = useNavigation();
+
+  function navigateToLogin() {
+    nav.navigate("Login" as never);
+  }
 
   return (
     <SafeAreaView
@@ -60,6 +66,36 @@ const RegisterPage = () => {
             console.log("Email: ", email);
           }}
         />
+
+        <View style={{ height: 40 }} />
+
+        <Typography
+          variant='body'
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Already have an account?{" "}
+          <Text
+            style={{ color: theme.colors.highlightColor }}
+            onPress={navigateToLogin}
+          >
+            Login
+          </Text>
+        </Typography>
+
+        <View style={{ height: 10 }} />
+
+        <Typography
+          variant='body'
+          style={{
+            textAlign: "center",
+          }}
+        >
+          By creating an account, you agree to our{" "}
+          <Text style={{ color: theme.colors.highlightColor }}>Terms</Text> and{" "}
+          <Text style={{ color: theme.colors.highlightColor }}>Privacy</Text>
+        </Typography>
       </ScrollView>
     </SafeAreaView>
   );

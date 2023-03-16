@@ -1,5 +1,6 @@
 export const LIGHT_BACKGROUND_COLOR = '#ffffff';
 export const LIGHT_FONT_COLOR = '#000000';
+export const LIGHT_HIGHLIGHT_COLOR = '#537FE7';
 export const LIGHT_PRIMARY_BUTTON_COLOR = '#000000';
 export const LIGHT_PRIMARY_BUTTON_TEXT_COLOR = '#ffffff';
 export const LIGHT_SECONDARY_BUTTON_COLOR = '#ffffff';
@@ -10,6 +11,7 @@ export const LIGHT_TEXT_INPUT_ICON_COLOR = '#000000';
 
 export const DARK_BACKGROUND_COLOR = '#171717';
 export const DARK_FONT_COLOR = '#ffffff';
+export const DARK_HIGHLIGHT_COLOR = '#537FE7';
 export const DARK_PRIMARY_BUTTON_COLOR = '#ffffff';
 export const DARK_PRIMARY_BUTTON_TEXT_COLOR = '#000000';
 export const DARK_SECONDARY_BUTTON_COLOR = '#171717';
@@ -30,6 +32,7 @@ export const LIGHT_THEME = {
     colors : {
         backgroundColor: LIGHT_BACKGROUND_COLOR,
         fontColor: LIGHT_FONT_COLOR,
+        highlightColor: LIGHT_HIGHLIGHT_COLOR,
         primaryButtonColor: LIGHT_PRIMARY_BUTTON_COLOR,
         primaryButtonTextColor: LIGHT_PRIMARY_BUTTON_TEXT_COLOR,
         secondaryButtonColor: LIGHT_SECONDARY_BUTTON_COLOR,
@@ -48,6 +51,7 @@ export const DARK_THEME = {
     colors : {
         backgroundColor: DARK_BACKGROUND_COLOR,
         fontColor: DARK_FONT_COLOR,
+        highlightColor: DARK_HIGHLIGHT_COLOR,
         primaryButtonColor: DARK_PRIMARY_BUTTON_COLOR,
         primaryButtonTextColor: DARK_PRIMARY_BUTTON_TEXT_COLOR,
         secondaryButtonColor: DARK_SECONDARY_BUTTON_COLOR,
