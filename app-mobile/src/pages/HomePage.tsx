@@ -2,20 +2,24 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import PollListItem from "@components/PollListItem";
 import { polls } from "@assets/data/polls";
-import { useSelector } from "react-redux";
+import useTheme from "@src/hooks/useTheme";
 
 const HomePage = () => {
-  const { theme } = useSelector((state: any) => state.ui);
+  const { theme } = useTheme();
 
   return (
     <View
-      style={{ ...styles.container, backgroundColor: theme.backgroundColor }}
+      style={[
+        styles.container,
+        { backgroundColor: theme.colors.backgroundColor },
+      ]}
     >
       <FlatList
         data={polls}
         renderItem={({ item }) => (
-          <PollListItem poll={item} isLast={polls.length === item.id} />
+          <PollListItem poll={item} isLastItem={polls.length === item.id} />
         )}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );

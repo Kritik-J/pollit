@@ -60,7 +60,7 @@ const Button = (props: ButtonProps) => {
       disabled={disabled}
     >
       {loading ? (
-        <ActivityIndicator size='small' color={spinnerColor} />
+        <ActivityIndicator size="small" color={spinnerColor} />
       ) : (
         <Text
           style={{

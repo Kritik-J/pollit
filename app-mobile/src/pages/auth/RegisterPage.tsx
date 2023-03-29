@@ -36,12 +36,12 @@ const RegisterPage = () => {
           backgroundColor: theme.colors.backgroundColor,
         }}
       >
-        <Typography variant='h1'>Welcome to PollIt</Typography>
+        <Typography variant="h1">Welcome to PollIt</Typography>
 
         <View style={{ height: 5 }} />
 
         <Typography
-          variant='h3'
+          variant="h3"
           style={{
             color: "grey",
           }}
@@ -52,16 +52,16 @@ const RegisterPage = () => {
         <View style={{ height: 30 }} />
 
         <FormInput
-          placeholder='Email'
+          placeholder="Email"
           value={email}
           onChangeText={setEmail}
-          keyboardType='email-address'
+          keyboardType="email-address"
         />
 
         <View style={{ height: 20 }} />
 
         <Button
-          title='Get OTP'
+          title="Get OTP"
           onPress={() => {
             console.log("Email: ", email);
           }}
@@ -70,7 +70,7 @@ const RegisterPage = () => {
         <View style={{ height: 40 }} />
 
         <Typography
-          variant='body'
+          variant="body"
           style={{
             textAlign: "center",
           }}
@@ -87,7 +87,7 @@ const RegisterPage = () => {
         <View style={{ height: 10 }} />
 
         <Typography
-          variant='body'
+          variant="body"
           style={{
             textAlign: "center",
           }}

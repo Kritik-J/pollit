@@ -1,7 +1,9 @@
-import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
+import { StyleSheet, TouchableNativeFeedback, View } from "react-native";
 import React from "react";
 import dayjs from "dayjs";
 import Typography from "./Typography";
+import { Entypo } from "@expo/vector-icons";
+import useTheme from "@src/hooks/useTheme";
 
 type PollListItemProps = {
   poll: {
@@ -14,35 +16,58 @@ type PollListItemProps = {
     };
     createdAt: string;
   };
-  isLast: boolean;
+
+  isLastItem: boolean;
 };
 
 const PollListItem = (props: PollListItemProps) => {
-  const { poll, isLast } = props;
+  const { poll, isLastItem } = props;
+  const { theme } = useTheme();
 
   return (
     <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple("rgba(0, 0, 0, 0.1)", false)}
+      background={TouchableNativeFeedback.Ripple(
+        theme.colors.rippleColor,
+        false
+      )}
     >
       <View
         style={[
           styles.container,
           {
-            borderBottomWidth: isLast ? 0 : 1,
+            backgroundColor: theme.colors.pollListItemColor,
+            borderBottomWidth: isLastItem ? 0 : 5,
+            borderBottomColor: theme.colors.pollListItemBorderBottomColor,
           },
         ]}
       >
-        <Typography variant='h3' style={styles.title}>
-          {poll.title}
-        </Typography>
+        <View style={{ flex: 1 }}>
+          <Typography variant="h3" style={styles.title}>
+            {poll.title}
+          </Typography>
 
-        <Typography variant='body' style={styles.username}>
-          @{poll.user.userName}
-        </Typography>
+          <Typography
+            variant="body"
+            style={[
+              styles.username,
+              {
+                color: theme.colors.highlightColor,
+              },
+            ]}
+          >
+            @{poll.user.userName}
+          </Typography>
 
-        <Typography variant='body' style={styles.date}>
-          {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
-        </Typography>
+          <Typography variant="body" style={styles.date}>
+            {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
+          </Typography>
+        </View>
+
+        <Entypo
+          name="dots-three-vertical"
+          size={16}
+          color={theme.colors.textInputIconColor}
+        />
       </View>
     </TouchableNativeFeedback>
   );
@@ -52,21 +77,18 @@ export default PollListItem;
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: "lightgray",
     padding: 10,
-    backgroundColor: "#fff",
+    flexDirection: "row",
   },
 
   title: {
     fontSize: 18,
     fontWeight: "700",
-    color: "black",
     marginBottom: 10,
   },
 
   username: {
     fontSize: 16,
-    color: "blue",
     marginBottom: 10,
   },
 
