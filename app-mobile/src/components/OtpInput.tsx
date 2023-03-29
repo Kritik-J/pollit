@@ -14,10 +14,11 @@ const OtpInput = (props: OtpInputProps) => {
       handleChange={handleChange}
       autofillFromClipboard={false}
       numberOfInputs={6}
-      inputStyles={styles.underlineStyleBase}
-      inputContainerStyles={styles.underlineStyleHighLighted}
       secureTextEntry={true}
-      style={styles.container}
+      style={styles.otpContainer}
+      inputContainerStyles={styles.inputContainer}
+      inputStyles={styles.input}
+      focusStyles={styles.inputContainerFocused}
     />
   );
 };
@@ -25,23 +26,29 @@ const OtpInput = (props: OtpInputProps) => {
 export default OtpInput;
 
 const styles = StyleSheet.create({
-  container: {
+  otpContainer: {
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
 
-  underlineStyleBase: {
-    width: 48,
-    height: 48,
+  inputContainer: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: "#000",
+    width: 48,
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  input: {
     textAlign: "center",
     fontSize: 14,
   },
 
-  underlineStyleHighLighted: {
+  inputContainerFocused: {
     borderColor: "#537FE7",
+    borderRadius: 5,
   },
 });

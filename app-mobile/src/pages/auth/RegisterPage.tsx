@@ -17,7 +17,6 @@ import OtpInput from "@src/components/OtpInput";
 const RegisterPage = () => {
   const { theme } = useTheme();
   const [email, setEmail] = React.useState<string>("");
-  const [otp, setOtp] = React.useState<string>("");
   const [showOtpInput, setShowOtpInput] = React.useState<boolean>(false);
 
   const nav = useNavigation();
@@ -31,8 +30,10 @@ const RegisterPage = () => {
     setShowOtpInput(true);
   }
 
-  function handleVerifyOtp() {
-    console.log("OTP: ", otp);
+  function handleOtpChange(otp: string) {
+    if (otp.length === 6) {
+      console.log("OTP: ", otp);
+    }
   }
 
   return (
@@ -77,9 +78,19 @@ const RegisterPage = () => {
         {showOtpInput && (
           <>
             <View style={{ height: 40 }} />
-            <OtpInput handleChange={setOtp} />
-            <View style={{ height: 20 }} />
-            <Button title='Verify OTP' onPress={handleVerifyOtp} />
+
+            <Typography
+              variant='h3'
+              style={{
+                color: "grey",
+              }}
+            >
+              Enter OTP sent to your email
+            </Typography>
+
+            <View style={{ height: 30 }} />
+
+            <OtpInput handleChange={handleOtpChange} />
           </>
         )}
 
