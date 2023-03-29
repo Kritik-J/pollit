@@ -40,13 +40,13 @@ const Navigation = () => {
             },
           }),
         }}
-        initialRouteName="Root"
+        initialRouteName='Register'
       >
-        <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen name='Login' component={LoginPage} />
 
-        <Stack.Screen name="Register" component={RegisterPage} />
+        <Stack.Screen name='Register' component={RegisterPage} />
 
-        <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen name='Root' component={BottomTabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -58,10 +58,10 @@ export const BottomTabNavigator = () => {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style='light' />
 
       <BottomTab.Navigator
-        initialRouteName="Home"
+        initialRouteName='Home'
         screenOptions={{
           header: () => <Header />,
           tabBarStyle: {
@@ -73,23 +73,23 @@ export const BottomTabNavigator = () => {
         }}
       >
         <BottomTab.Screen
-          name="Home"
+          name='Home'
           component={HomePage}
           options={{
             title: "Home",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-home" color={color} size={size} />
+              <Ionicons name='ios-home' color={color} size={size} />
             ),
           }}
         />
 
         <BottomTab.Screen
-          name="Profile"
+          name='Profile'
           component={HomePage}
           options={{
             title: "Profile",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-person" color={color} size={size} />
+              <Ionicons name='ios-person' color={color} size={size} />
             ),
           }}
         />
