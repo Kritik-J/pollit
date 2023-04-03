@@ -97,7 +97,7 @@ const RegisterPage = () => {
 
             <View style={{ height: 20 }} />
 
-            <Button title='Get OTP' onPress={handleVerifyOtp} />
+            <Button title='Verify OTP' onPress={handleVerifyOtp} />
           </>
         )}
 
