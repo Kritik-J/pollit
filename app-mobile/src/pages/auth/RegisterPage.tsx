@@ -18,6 +18,7 @@ const RegisterPage = () => {
   const { theme } = useTheme();
   const [email, setEmail] = React.useState<string>("");
   const [showOtpInput, setShowOtpInput] = React.useState<boolean>(false);
+  const [otp, setOtp] = React.useState<string>("");
 
   const nav = useNavigation();
 
@@ -30,10 +31,12 @@ const RegisterPage = () => {
     setShowOtpInput(true);
   }
 
-  function handleOtpChange(otp: string) {
-    if (otp.length === 6) {
-      console.log("OTP: ", otp);
+  function handleVerifyOtp() {
+    if (otp.length !== 6) {
+      return;
     }
+
+    console.log("OTP: ", otp);
   }
 
   return (
@@ -90,7 +93,11 @@ const RegisterPage = () => {
 
             <View style={{ height: 30 }} />
 
-            <OtpInput handleChange={handleOtpChange} />
+            <OtpInput numInputs={6} onChange={setOtp} />
+
+            <View style={{ height: 20 }} />
+
+            <Button title='Get OTP' onPress={handleVerifyOtp} />
           </>
         )}
 

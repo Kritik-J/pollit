@@ -14,6 +14,9 @@ export const LIGHT_RIPPLE_COLOR = "rgba(0, 0, 0, 0.1)";
 export const LIGHT_BOTTOM_TAB_BAR_COLOR = "#f5f5f5";
 export const LIGHT_BOTTOM_TAB_BAR_ACTIVE_TINT_COLOR = "#537FE7";
 export const LIGHT_BOTTOM_TAB_BAR_INACTIVE_TINT_COLOR = "#2a2a2a";
+export const LIGHT_OTP_INPUT_BORDER_COLOR = "#000000";
+export const LIGHT_OTP_INPUT_BORDER_COLOR_ACTIVE = "#537FE7";
+export const LIGHT_OTP_INPUT_FONT_COLOR = "#000000";
 
 export const DARK_BACKGROUND_COLOR = "#171717";
 export const DARK_FONT_COLOR = "#ffffff";
@@ -31,6 +34,9 @@ export const DARK_RIPPLE_COLOR = "rgba(255, 255, 255, 0.1)";
 export const DARK_BOTTOM_TAB_BAR_COLOR = "#212121";
 export const DARK_BOTTOM_TAB_BAR_ACTIVE_TINT_COLOR = "#537FE7";
 export const DARK_BOTTOM_TAB_BAR_INACTIVE_TINT_COLOR = "#fafafa";
+export const DARK_OTP_INPUT_BORDER_COLOR = "#ffffff";
+export const DARK_OTP_INPUT_BORDER_COLOR_ACTIVE = "#537FE7";
+export const DARK_OTP_INPUT_FONT_COLOR = "#ffffff";
 
 export const ERROR_COLOR = "#f3405e";
 export const WARNING_COLOR = "#f7a90d";
@@ -58,6 +64,9 @@ export const LIGHT_THEME = {
     bottomTabBarColor: LIGHT_BOTTOM_TAB_BAR_COLOR,
     bottomTabBarActiveTintColor: LIGHT_BOTTOM_TAB_BAR_ACTIVE_TINT_COLOR,
     bottomTabBarInactiveTintColor: LIGHT_BOTTOM_TAB_BAR_INACTIVE_TINT_COLOR,
+    otpInputBorderActiveColor: LIGHT_OTP_INPUT_BORDER_COLOR_ACTIVE,
+    otpInputBorderInactiveColor: LIGHT_OTP_INPUT_BORDER_COLOR,
+    otpInputFontColor: LIGHT_OTP_INPUT_FONT_COLOR,
     rippleColor: LIGHT_RIPPLE_COLOR,
     errorColor: ERROR_COLOR,
     warningColor: WARNING_COLOR,
@@ -84,6 +93,9 @@ export const DARK_THEME = {
     bottomTabBarColor: DARK_BOTTOM_TAB_BAR_COLOR,
     bottomTabBarActiveTintColor: DARK_BOTTOM_TAB_BAR_ACTIVE_TINT_COLOR,
     bottomTabBarInactiveTintColor: DARK_BOTTOM_TAB_BAR_INACTIVE_TINT_COLOR,
+    otpInputBorderActiveColor: DARK_OTP_INPUT_BORDER_COLOR_ACTIVE,
+    otpInputBorderInactiveColor: DARK_OTP_INPUT_BORDER_COLOR,
+    otpInputFontColor: DARK_OTP_INPUT_FONT_COLOR,
     rippleColor: DARK_RIPPLE_COLOR,
     errorColor: ERROR_COLOR,
     warningColor: WARNING_COLOR,
