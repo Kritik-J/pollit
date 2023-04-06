@@ -17,6 +17,8 @@ export const LIGHT_BOTTOM_TAB_BAR_INACTIVE_TINT_COLOR = "#2a2a2a";
 export const LIGHT_OTP_INPUT_BORDER_COLOR = "#000000";
 export const LIGHT_OTP_INPUT_BORDER_COLOR_ACTIVE = "#537FE7";
 export const LIGHT_OTP_INPUT_FONT_COLOR = "#000000";
+export const LIGHT_BOTTOM_SHEET_BACKGROUND_COLOR = "#f5f5f5";
+export const LIGHT_BOTTOM_SHEET_INDICATOR_COLOR = "#2a2a2a";
 
 export const DARK_BACKGROUND_COLOR = "#171717";
 export const DARK_FONT_COLOR = "#ffffff";
@@ -37,6 +39,8 @@ export const DARK_BOTTOM_TAB_BAR_INACTIVE_TINT_COLOR = "#fafafa";
 export const DARK_OTP_INPUT_BORDER_COLOR = "#ffffff";
 export const DARK_OTP_INPUT_BORDER_COLOR_ACTIVE = "#537FE7";
 export const DARK_OTP_INPUT_FONT_COLOR = "#ffffff";
+export const DARK_BOTTOM_SHEET_BACKGROUND_COLOR = "#212121";
+export const DARK_BOTTOM_SHEET_INDICATOR_COLOR = "#fafafa";
 
 export const ERROR_COLOR = "#f3405e";
 export const WARNING_COLOR = "#f7a90d";
@@ -67,6 +71,8 @@ export const LIGHT_THEME = {
     otpInputBorderActiveColor: LIGHT_OTP_INPUT_BORDER_COLOR_ACTIVE,
     otpInputBorderInactiveColor: LIGHT_OTP_INPUT_BORDER_COLOR,
     otpInputFontColor: LIGHT_OTP_INPUT_FONT_COLOR,
+    bottomSheetBackgroundColor: LIGHT_BOTTOM_SHEET_BACKGROUND_COLOR,
+    bottomSheetIndicatorColor: LIGHT_BOTTOM_SHEET_INDICATOR_COLOR,
     rippleColor: LIGHT_RIPPLE_COLOR,
     errorColor: ERROR_COLOR,
     warningColor: WARNING_COLOR,
@@ -96,6 +102,8 @@ export const DARK_THEME = {
     otpInputBorderActiveColor: DARK_OTP_INPUT_BORDER_COLOR_ACTIVE,
     otpInputBorderInactiveColor: DARK_OTP_INPUT_BORDER_COLOR,
     otpInputFontColor: DARK_OTP_INPUT_FONT_COLOR,
+    bottomSheetBackgroundColor: DARK_BOTTOM_SHEET_BACKGROUND_COLOR,
+    bottomSheetIndicatorColor: DARK_BOTTOM_SHEET_INDICATOR_COLOR,
     rippleColor: DARK_RIPPLE_COLOR,
     errorColor: ERROR_COLOR,
     warningColor: WARNING_COLOR,

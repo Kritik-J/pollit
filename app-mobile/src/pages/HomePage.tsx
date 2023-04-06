@@ -3,6 +3,7 @@ import React from "react";
 import PollListItem from "@components/PollListItem";
 import { polls } from "@assets/data/polls";
 import useTheme from "@src/hooks/useTheme";
+import Typography from "@src/components/Typography";
 
 const HomePage = () => {
   const { theme } = useTheme();

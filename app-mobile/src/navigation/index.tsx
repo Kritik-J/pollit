@@ -12,6 +12,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "@src/components/Header";
 import { useAppDispatch } from "@src/hooks/useReduce";
+import ProfilePage from "@src/pages/ProfilePage";
+import CreatePollPage from "@src/pages/CreatePollPage";
+import PollPage from "@src/pages/PollPage";
 
 const Navigation = () => {
   const Stack = createStackNavigator();
@@ -40,13 +43,15 @@ const Navigation = () => {
             },
           }),
         }}
-        initialRouteName='Register'
+        initialRouteName='Root'
       >
         <Stack.Screen name='Login' component={LoginPage} />
 
         <Stack.Screen name='Register' component={RegisterPage} />
 
         <Stack.Screen name='Root' component={BottomTabNavigator} />
+
+        <Stack.Screen name='Poll' component={PollPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -54,7 +59,7 @@ const Navigation = () => {
 
 export const BottomTabNavigator = () => {
   const BottomTab = createBottomTabNavigator();
-  const { mode, theme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <>
@@ -84,8 +89,20 @@ export const BottomTabNavigator = () => {
         />
 
         <BottomTab.Screen
+          name='Create'
+          component={CreatePollPage}
+          options={{
+            title: "Create",
+            tabBarLabel: () => null,
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name='ios-add-circle-outline' color={color} size={32} />
+            ),
+          }}
+        />
+
+        <BottomTab.Screen
           name='Profile'
-          component={HomePage}
+          component={ProfilePage}
           options={{
             title: "Profile",
             tabBarIcon: ({ color, size }) => (
