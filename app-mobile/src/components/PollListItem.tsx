@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import Typography from "./Typography";
 import { Entypo } from "@expo/vector-icons";
 import useTheme from "@src/hooks/useTheme";
+import { useNavigation } from "@react-navigation/native";
 
 type PollListItemProps = {
   poll: {
@@ -23,6 +24,11 @@ type PollListItemProps = {
 const PollListItem = (props: PollListItemProps) => {
   const { poll, isLastItem } = props;
   const { theme } = useTheme();
+  const nav = useNavigation();
+
+  function navigateToPoll() {
+    nav.navigate("Poll" as never);
+  }
 
   return (
     <TouchableNativeFeedback
@@ -30,6 +36,7 @@ const PollListItem = (props: PollListItemProps) => {
         theme.colors.rippleColor,
         false
       )}
+      onPress={navigateToPoll}
     >
       <View
         style={[

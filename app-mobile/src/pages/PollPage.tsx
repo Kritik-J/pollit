@@ -3,9 +3,15 @@ import React from "react";
 import useTheme from "@src/hooks/useTheme";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import Typography from "@src/components/Typography";
+import { useNavigation } from "@react-navigation/native";
 
 const PollPage = () => {
   const { theme } = useTheme();
+  const nav = useNavigation();
+
+  function navigateBack() {
+    nav.goBack();
+  }
 
   return (
     <View
@@ -22,7 +28,12 @@ const PollPage = () => {
           },
         ]}
       >
-        <AntDesign name='arrowleft' size={24} color='white' />
+        <AntDesign
+          name='arrowleft'
+          size={24}
+          color='white'
+          onPress={navigateBack}
+        />
 
         <Entypo name='dots-three-vertical' size={20} color='white' />
       </View>

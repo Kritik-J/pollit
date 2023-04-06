@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type IUser = {};
+
 type AuthState = {
   isAuth: boolean;
   isLoading: boolean;
   error: string | null;
-  user: null;
+  user: IUser | null;
 };
 
 const initialState: AuthState = {

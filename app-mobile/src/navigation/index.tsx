@@ -16,8 +16,10 @@ import ProfilePage from "@src/pages/ProfilePage";
 import CreatePollPage from "@src/pages/CreatePollPage";
 import PollPage from "@src/pages/PollPage";
 
+const Stack = createStackNavigator();
+const BottomTab = createBottomTabNavigator();
+
 const Navigation = () => {
-  const Stack = createStackNavigator();
   const { mode } = useTheme();
 
   const colorScheme = useColorScheme();
@@ -43,11 +45,9 @@ const Navigation = () => {
             },
           }),
         }}
-        initialRouteName='Root'
+        initialRouteName='Auth'
       >
-        <Stack.Screen name='Login' component={LoginPage} />
-
-        <Stack.Screen name='Register' component={RegisterPage} />
+        <Stack.Screen name='Auth' component={AuthNavigator} />
 
         <Stack.Screen name='Root' component={BottomTabNavigator} />
 
@@ -57,8 +57,28 @@ const Navigation = () => {
   );
 };
 
+export const AuthNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+          cardStyle: {
+            opacity: progress,
+          },
+        }),
+      }}
+      initialRouteName='Login'
+    >
+      <Stack.Screen name='Login' component={LoginPage} />
+
+      <Stack.Screen name='Register' component={RegisterPage} />
+    </Stack.Navigator>
+  );
+};
+
 export const BottomTabNavigator = () => {
-  const BottomTab = createBottomTabNavigator();
   const { theme } = useTheme();
 
   return (
