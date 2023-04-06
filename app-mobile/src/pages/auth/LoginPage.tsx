@@ -48,12 +48,12 @@ const LoginPage = () => {
           backgroundColor: theme.colors.backgroundColor,
         }}
       >
-        <Typography variant='h1'>Welcome to PollIt</Typography>
+        <Typography variant="h1">Welcome to PollIt</Typography>
 
         <View style={{ height: 5 }} />
 
         <Typography
-          variant='h3'
+          variant="h3"
           style={{
             color: "grey",
           }}
@@ -64,16 +64,16 @@ const LoginPage = () => {
         <View style={{ height: 30 }} />
 
         <FormInput
-          placeholder='Username or Email'
+          placeholder="Username or Email"
           value={email}
           onChangeText={setEmail}
-          keyboardType='email-address'
+          keyboardType="email-address"
         />
 
         <View style={{ height: 10 }} />
 
         <FormInput
-          placeholder='Password'
+          placeholder="Password"
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!showPassword}
@@ -93,7 +93,7 @@ const LoginPage = () => {
         <View style={{ height: 10 }} />
 
         <Typography
-          variant='body'
+          variant="body"
           style={{
             textAlign: "right",
           }}
@@ -104,7 +104,7 @@ const LoginPage = () => {
         <View style={{ height: 20 }} />
 
         <Button
-          title='Login'
+          title="Login"
           onPress={() => {
             console.log("Email: ", email);
             console.log("Password: ", password);
@@ -115,7 +115,7 @@ const LoginPage = () => {
         <View style={{ height: 40 }} />
 
         <Typography
-          variant='body'
+          variant="body"
           style={{
             textAlign: "center",
           }}

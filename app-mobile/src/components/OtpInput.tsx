@@ -79,7 +79,7 @@ const OtpInput = (props: OtpInputProps) => {
           value={value}
           onChangeText={(text) => handleChange(index, text)}
           maxLength={1}
-          keyboardType='numeric'
+          keyboardType="numeric"
           onFocus={() => handleFocus(index)}
           onKeyPress={({ nativeEvent }) => {
             if (nativeEvent.key === "Backspace") {

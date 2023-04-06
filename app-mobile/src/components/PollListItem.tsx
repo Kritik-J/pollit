@@ -49,12 +49,12 @@ const PollListItem = (props: PollListItemProps) => {
         ]}
       >
         <View style={{ flex: 1 }}>
-          <Typography variant='h3' style={styles.title}>
+          <Typography variant="h3" style={styles.title}>
             {poll.title}
           </Typography>
 
           <Typography
-            variant='body'
+            variant="body"
             style={[
               styles.username,
               {
@@ -65,13 +65,13 @@ const PollListItem = (props: PollListItemProps) => {
             @{poll.user.userName}
           </Typography>
 
-          <Typography variant='body' style={styles.date}>
+          <Typography variant="body" style={styles.date}>
             {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
           </Typography>
         </View>
 
         <Entypo
-          name='dots-three-vertical'
+          name="dots-three-vertical"
           size={16}
           color={theme.colors.textInputIconColor}
         />

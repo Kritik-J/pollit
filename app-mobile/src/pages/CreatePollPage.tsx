@@ -15,12 +15,12 @@ const CreatePollPage = () => {
         { backgroundColor: theme.colors.backgroundColor },
       ]}
     >
-      <Typography variant='h2'>Create a new poll</Typography>
+      <Typography variant="h2">Create a new poll</Typography>
 
       <View style={{ height: 20 }} />
 
       <FormInput
-        placeholder='Poll title'
+        placeholder="Poll title"
         value={title}
         onChangeText={setTitle}
       />

@@ -29,17 +29,17 @@ const PollPage = () => {
         ]}
       >
         <AntDesign
-          name='arrowleft'
+          name="arrowleft"
           size={24}
-          color='white'
+          color="white"
           onPress={navigateBack}
         />
 
-        <Entypo name='dots-three-vertical' size={20} color='white' />
+        <Entypo name="dots-three-vertical" size={20} color="white" />
       </View>
 
       <View style={styles.bodyContainer}>
-        <Typography variant='h2'>Poll Title</Typography>
+        <Typography variant="h2">Poll Title</Typography>
       </View>
     </View>
   );

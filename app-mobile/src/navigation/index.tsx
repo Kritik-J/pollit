@@ -45,13 +45,13 @@ const Navigation = () => {
             },
           }),
         }}
-        initialRouteName='Auth'
+        initialRouteName="Auth"
       >
-        <Stack.Screen name='Auth' component={AuthNavigator} />
+        <Stack.Screen name="Auth" component={AuthNavigator} />
 
-        <Stack.Screen name='Root' component={BottomTabNavigator} />
+        <Stack.Screen name="Root" component={BottomTabNavigator} />
 
-        <Stack.Screen name='Poll' component={PollPage} />
+        <Stack.Screen name="Poll" component={PollPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -69,11 +69,11 @@ export const AuthNavigator = () => {
           },
         }),
       }}
-      initialRouteName='Login'
+      initialRouteName="Login"
     >
-      <Stack.Screen name='Login' component={LoginPage} />
+      <Stack.Screen name="Login" component={LoginPage} />
 
-      <Stack.Screen name='Register' component={RegisterPage} />
+      <Stack.Screen name="Register" component={RegisterPage} />
     </Stack.Navigator>
   );
 };
@@ -83,10 +83,10 @@ export const BottomTabNavigator = () => {
 
   return (
     <>
-      <StatusBar style='light' />
+      <StatusBar style="light" />
 
       <BottomTab.Navigator
-        initialRouteName='Home'
+        initialRouteName="Home"
         screenOptions={{
           header: () => <Header />,
           tabBarStyle: {
@@ -98,35 +98,35 @@ export const BottomTabNavigator = () => {
         }}
       >
         <BottomTab.Screen
-          name='Home'
+          name="Home"
           component={HomePage}
           options={{
             title: "Home",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name='ios-home' color={color} size={size} />
+              <Ionicons name="ios-home" color={color} size={size} />
             ),
           }}
         />
 
         <BottomTab.Screen
-          name='Create'
+          name="Create"
           component={CreatePollPage}
           options={{
             title: "Create",
             tabBarLabel: () => null,
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name='ios-add-circle-outline' color={color} size={32} />
+              <Ionicons name="ios-add-circle-outline" color={color} size={32} />
             ),
           }}
         />
 
         <BottomTab.Screen
-          name='Profile'
+          name="Profile"
           component={ProfilePage}
           options={{
             title: "Profile",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name='ios-person' color={color} size={size} />
+              <Ionicons name="ios-person" color={color} size={size} />
             ),
           }}
         />

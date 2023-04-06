@@ -21,14 +21,14 @@ const ProfilePage = () => {
           padding: 10,
         }}
       >
-        <Avatar uri='https://picsum.photos/200/200' size={64} />
+        <Avatar uri="https://picsum.photos/200/200" size={64} />
 
         <View style={{ flex: 1, marginLeft: 15 }}>
-          <Typography variant='h3'>John Doe</Typography>
+          <Typography variant="h3">John Doe</Typography>
 
           <View style={{ height: 5 }} />
 
-          <Typography variant='body'>@johndoe</Typography>
+          <Typography variant="body">@johndoe</Typography>
         </View>
       </View>
     </View>
