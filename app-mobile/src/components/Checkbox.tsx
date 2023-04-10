@@ -4,24 +4,35 @@ import useTheme from "@src/hooks/useTheme";
 import Typography from "./Typography";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const options = [
-  {
-    id: 0,
-    value: "First",
-  },
-  {
-    id: 1,
-    value: "Second",
-  },
-  {
-    id: 2,
-    value: "Third",
-  },
-];
+// const options = [
+//   {
+//     id: 0,
+//     value: "First",
+//   },
+//   {
+//     id: 1,
+//     value: "Second",
+//   },
+//   {
+//     id: 2,
+//     value: "Third",
+//   },
+// ];
 
-const Checkbox = () => {
+type ICheckboxProps = {
+  options: {
+    id: string;
+    value: string;
+  }[];
+};
+
+const Checkbox = (props: ICheckboxProps) => {
   const [selected, setSelected] = React.useState<string[]>([]);
   const { theme } = useTheme();
+
+  const { options } = props;
+
+  console.log(selected);
 
   return (
     <View>
@@ -56,14 +67,14 @@ const Checkbox = () => {
             >
               {selected.includes(item.value) && (
                 <FontAwesome5
-                  name="check"
+                  name='check'
                   size={10}
                   color={theme.colors.checkboxTickColor}
                 />
               )}
             </View>
 
-            <Typography variant="h4" style={{ marginLeft: 10 }}>
+            <Typography variant='h4' style={{ marginLeft: 10 }}>
               {item.value}
             </Typography>
           </TouchableOpacity>

@@ -3,24 +3,35 @@ import React from "react";
 import Typography from "./Typography";
 import useTheme from "@src/hooks/useTheme";
 
-const options = [
-  {
-    id: 0,
-    value: "First",
-  },
-  {
-    id: 1,
-    value: "Second",
-  },
-  {
-    id: 2,
-    value: "Third",
-  },
-];
+// const options = [
+//   {
+//     id: 0,
+//     value: "First",
+//   },
+//   {
+//     id: 1,
+//     value: "Second",
+//   },
+//   {
+//     id: 2,
+//     value: "Third",
+//   },
+// ];
 
-const Radio = () => {
+type IRadioProps = {
+  options: {
+    id: string;
+    value: string;
+  }[];
+};
+
+const Radio = (props: IRadioProps) => {
   const [selected, setSelected] = React.useState("");
   const { theme } = useTheme();
+
+  const { options } = props;
+
+  console.log(selected);
 
   return (
     <View>
@@ -56,7 +67,7 @@ const Radio = () => {
               )}
             </View>
 
-            <Typography variant="h4" style={{ marginLeft: 10 }}>
+            <Typography variant='h4' style={{ marginLeft: 10 }}>
               {item.value}
             </Typography>
           </TouchableOpacity>
