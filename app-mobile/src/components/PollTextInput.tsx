@@ -14,14 +14,14 @@ type PollTextInputProps = {
   keyboardType?: any;
   InputProps?: any;
   status?: "error" | "success" | "warning" | "info";
+  qid: string;
+  onChange: Function;
 };
 
 const PollTextInput = (props: PollTextInputProps) => {
   const { theme } = useTheme();
 
   const [answer, setAnswer] = React.useState("");
-
-  console.log(answer);
 
   const {
     borderRadius = 5,
@@ -35,7 +35,13 @@ const PollTextInput = (props: PollTextInputProps) => {
     keyboardType = "default",
     InputProps,
     status,
+    qid,
+    onChange,
   } = props;
+
+  React.useEffect(() => {
+    onChange(qid, answer);
+  }, [answer]);
 
   return (
     <TextInput

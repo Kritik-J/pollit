@@ -17,8 +17,8 @@ const HomePage = () => {
     >
       <FlatList
         data={polls}
-        renderItem={({ item }) => (
-          <PollListItem poll={item} isLastItem={polls.length === item.id} />
+        renderItem={({ item, index }) => (
+          <PollListItem poll={item} isLastItem={polls.length === index + 1} />
         )}
         keyExtractor={(item) => item.id.toString()}
       />

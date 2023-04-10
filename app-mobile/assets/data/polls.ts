@@ -76,7 +76,7 @@ export const polls = [
     title: "What if?",
     questions: [
       {
-        id: 1,
+        id: "1",
         title: "What if time travel was possible?",
         inputType: "radio",
         options: [

@@ -21,14 +21,15 @@ const PollPage = () => {
 
   const poll = polls[0];
 
-  const updateAnswers = (id: string, value: any) => {
-    const obj: any = answers;
-    obj[id] = value;
-    setAnswers(obj);
-    console.log(answers);
+  const updateAnswers = (id: string, value: string | string[]) => {
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [id]: value,
+    }));
   };
 
   useEffect(() => {
+    console.log(answers);
     console.log("Answers changed");
   }, [answers]);
 
@@ -48,17 +49,17 @@ const PollPage = () => {
         ]}
       >
         <AntDesign
-          name="arrowleft"
+          name='arrowleft'
           size={24}
-          color="white"
+          color='white'
           onPress={navigateBack}
         />
 
-        <Entypo name="dots-three-vertical" size={20} color="white" />
+        <Entypo name='dots-three-vertical' size={20} color='white' />
       </View>
 
       <ScrollView contentContainerStyle={styles.bodyContainer}>
-        <Typography variant="h2">{poll.title}</Typography>
+        <Typography variant='h2'>{poll.title}</Typography>
 
         <View style={{ height: 20 }} />
 
@@ -70,29 +71,35 @@ const PollPage = () => {
                 marginTop: index === 0 ? 0 : 15,
               }}
             >
-              <Typography variant="h3">{item.title}</Typography>
+              <Typography variant='h3'>{item.title}</Typography>
 
               <View style={{ height: 10 }} />
 
               {item.inputType === "radio" && item.options && (
                 <Radio
-                  qid={"12"}
+                  qid={item.id}
                   options={item.options}
                   onChange={updateAnswers}
                 />
               )}
 
               {item.inputType === "checkbox" && item.options && (
-                <Checkbox options={item.options} />
+                <Checkbox
+                  qid={item.id}
+                  options={item.options}
+                  onChange={updateAnswers}
+                />
               )}
 
-              {item.inputType === "text" && <PollTextInput />}
+              {item.inputType === "text" && (
+                <PollTextInput qid={item.id} onChange={updateAnswers} />
+              )}
             </View>
           ))}
 
         <View style={{ height: 20 }} />
 
-        <Button title="Answer" onPress={() => {}} />
+        <Button title='Answer' onPress={() => {}} />
       </ScrollView>
     </View>
   );

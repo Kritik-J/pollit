@@ -20,19 +20,23 @@ import { FontAwesome5 } from "@expo/vector-icons";
 // ];
 
 type ICheckboxProps = {
+  qid: string;
   options: {
     id: string;
     value: string;
   }[];
+  onChange: Function;
 };
 
 const Checkbox = (props: ICheckboxProps) => {
   const [selected, setSelected] = React.useState<string[]>([]);
   const { theme } = useTheme();
 
-  const { options } = props;
+  const { qid, options, onChange } = props;
 
-  console.log(selected);
+  React.useEffect(() => {
+    onChange(qid, selected);
+  }, [selected]);
 
   return (
     <View>
