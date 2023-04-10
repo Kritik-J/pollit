@@ -1,5 +1,5 @@
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "./Typography";
 import useTheme from "@src/hooks/useTheme";
 
@@ -19,17 +19,23 @@ import useTheme from "@src/hooks/useTheme";
 // ];
 
 type IRadioProps = {
+  qid: string;
   options: {
     id: string;
     value: string;
   }[];
+  onChange: Function;
 };
 
 const Radio = (props: IRadioProps) => {
   const [selected, setSelected] = React.useState("");
   const { theme } = useTheme();
 
-  const { options } = props;
+  const { qid, options, onChange } = props;
+
+  useEffect(() => {
+    onChange(qid, selected);
+  }, [selected]);
 
   console.log(selected);
 
@@ -67,7 +73,7 @@ const Radio = (props: IRadioProps) => {
               )}
             </View>
 
-            <Typography variant='h4' style={{ marginLeft: 10 }}>
+            <Typography variant="h4" style={{ marginLeft: 10 }}>
               {item.value}
             </Typography>
           </TouchableOpacity>

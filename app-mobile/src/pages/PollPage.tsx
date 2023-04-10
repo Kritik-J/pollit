@@ -1,5 +1,5 @@
 import { StyleSheet, View, StatusBar, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useTheme from "@src/hooks/useTheme";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import Typography from "@src/components/Typography";
@@ -13,12 +13,24 @@ import Button from "@src/components/Button";
 const PollPage = () => {
   const { theme } = useTheme();
   const nav = useNavigation();
+  const [answers, setAnswers] = useState({});
 
   function navigateBack() {
     nav.goBack();
   }
 
   const poll = polls[0];
+
+  const updateAnswers = (id: string, value: any) => {
+    const obj: any = answers;
+    obj[id] = value;
+    setAnswers(obj);
+    console.log(answers);
+  };
+
+  useEffect(() => {
+    console.log("Answers changed");
+  }, [answers]);
 
   return (
     <View
@@ -36,17 +48,17 @@ const PollPage = () => {
         ]}
       >
         <AntDesign
-          name='arrowleft'
+          name="arrowleft"
           size={24}
-          color='white'
+          color="white"
           onPress={navigateBack}
         />
 
-        <Entypo name='dots-three-vertical' size={20} color='white' />
+        <Entypo name="dots-three-vertical" size={20} color="white" />
       </View>
 
       <ScrollView contentContainerStyle={styles.bodyContainer}>
-        <Typography variant='h2'>{poll.title}</Typography>
+        <Typography variant="h2">{poll.title}</Typography>
 
         <View style={{ height: 20 }} />
 
@@ -58,12 +70,16 @@ const PollPage = () => {
                 marginTop: index === 0 ? 0 : 15,
               }}
             >
-              <Typography variant='h3'>{item.title}</Typography>
+              <Typography variant="h3">{item.title}</Typography>
 
               <View style={{ height: 10 }} />
 
               {item.inputType === "radio" && item.options && (
-                <Radio options={item.options} />
+                <Radio
+                  qid={"12"}
+                  options={item.options}
+                  onChange={updateAnswers}
+                />
               )}
 
               {item.inputType === "checkbox" && item.options && (
@@ -76,7 +92,7 @@ const PollPage = () => {
 
         <View style={{ height: 20 }} />
 
-        <Button title='Answer' onPress={() => {}} />
+        <Button title="Answer" onPress={() => {}} />
       </ScrollView>
     </View>
   );
