@@ -6,20 +6,24 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     isRequired: {
       type: Boolean,
       default: false,
     },
+
     answerType: {
       type: String,
       enum: ['radio', 'text', 'checkbox'],
       default: 'text',
     },
+
     options: [
       {
         type: String,
       },
     ],
+
     votes: [
       {
         voterId: {
@@ -27,9 +31,11 @@ const questionSchema = new mongoose.Schema(
           required: true,
           ref: 'User',
         },
+
         textAnswer: {
           type: String,
         },
+
         optionAnswer: [
           {
             type: String,

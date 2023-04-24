@@ -71,14 +71,14 @@ const Checkbox = (props: ICheckboxProps) => {
             >
               {selected.includes(item.value) && (
                 <FontAwesome5
-                  name='check'
+                  name="check"
                   size={10}
                   color={theme.colors.checkboxTickColor}
                 />
               )}
             </View>
 
-            <Typography variant='h4' style={{ marginLeft: 10 }}>
+            <Typography variant="h4" style={{ marginLeft: 10 }}>
               {item.value}
             </Typography>
           </TouchableOpacity>

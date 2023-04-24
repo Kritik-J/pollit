@@ -68,6 +68,9 @@ const LoginPage = () => {
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          InputProps={{
+            autoCapitalize: "none",
+          }}
         />
 
         <View style={{ height: 10 }} />

@@ -72,6 +72,9 @@ const RegisterPage = () => {
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          InputProps={{
+            autoCapitalize: "none",
+          }}
         />
 
         <View style={{ height: 20 }} />

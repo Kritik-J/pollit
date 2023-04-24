@@ -6,16 +6,20 @@ const pollSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     description: {
       type: String,
     },
+
     questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}],
+
     voters: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       },
     ],
+
     startAt: {
       type: Date,
       default: Date.now(),

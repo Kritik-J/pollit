@@ -33,6 +33,11 @@ const PollPage = () => {
     console.log("Answers changed");
   }, [answers]);
 
+  const handleSubmitAnswers = () => {
+    console.log(answers);
+    console.log("Submitting answers");
+  };
+
   return (
     <View
       style={[
@@ -49,17 +54,17 @@ const PollPage = () => {
         ]}
       >
         <AntDesign
-          name='arrowleft'
+          name="arrowleft"
           size={24}
-          color='white'
+          color="white"
           onPress={navigateBack}
         />
 
-        <Entypo name='dots-three-vertical' size={20} color='white' />
+        <Entypo name="dots-three-vertical" size={20} color="white" />
       </View>
 
       <ScrollView contentContainerStyle={styles.bodyContainer}>
-        <Typography variant='h2'>{poll.title}</Typography>
+        <Typography variant="h2">{poll.title}</Typography>
 
         <View style={{ height: 20 }} />
 
@@ -71,7 +76,16 @@ const PollPage = () => {
                 marginTop: index === 0 ? 0 : 15,
               }}
             >
-              <Typography variant='h3'>{item.title}</Typography>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="h3" style={{ flex: 1 }}>
+                  {item.title}
+                </Typography>
+              </View>
 
               <View style={{ height: 10 }} />
 
@@ -99,7 +113,7 @@ const PollPage = () => {
 
         <View style={{ height: 20 }} />
 
-        <Button title='Answer' onPress={() => {}} />
+        <Button title="Answer" onPress={handleSubmitAnswers} />
       </ScrollView>
     </View>
   );

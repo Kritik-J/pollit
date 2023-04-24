@@ -1,9 +1,10 @@
 import express, {Router} from 'express';
+import {login, logout, register} from '../controllers/auth.controllers';
 
 const router: Router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+router.post('/register', register);
+router.post('/login', login);
+router.get('/logout', logout);
 
 export default router;

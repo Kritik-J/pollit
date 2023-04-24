@@ -71,7 +71,7 @@ const Radio = (props: IRadioProps) => {
               )}
             </View>
 
-            <Typography variant='h4' style={{ marginLeft: 10 }}>
+            <Typography variant="h4" style={{ marginLeft: 10 }}>
               {item.value}
             </Typography>
           </TouchableOpacity>
