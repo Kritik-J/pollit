@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {removeHash} from './password';
+import {removeHash} from './password.js';
 
 const createSendToken = (
   user: any,
