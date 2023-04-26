@@ -12,31 +12,24 @@ import FormInput from "@src/components/FormInput";
 import Typography from "@src/components/Typography";
 import useTheme from "@src/hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
-import OtpInput from "@src/components/OtpInput";
+import { Octicons } from "@expo/vector-icons";
 
 const RegisterPage = () => {
   const { theme } = useTheme();
+  const [name, setName] = React.useState<string>("");
+  const [userName, setUserName] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
-  const [showOtpInput, setShowOtpInput] = React.useState<boolean>(false);
-  const [otp, setOtp] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
   const nav = useNavigation();
 
+  function toggleShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
   function navigateToLogin() {
     nav.navigate("Login" as never);
-  }
-
-  function handleGetOtp() {
-    console.log("Email: ", email);
-    setShowOtpInput(true);
-  }
-
-  function handleVerifyOtp() {
-    if (otp.length !== 6) {
-      return;
-    }
-
-    console.log("OTP: ", otp);
   }
 
   return (
@@ -67,11 +60,14 @@ const RegisterPage = () => {
 
         <View style={{ height: 30 }} />
 
+        <FormInput placeholder="Name" value={name} onChangeText={setName} />
+
+        <View style={{ height: 20 }} />
+
         <FormInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
+          placeholder="Username"
+          value={userName}
+          onChangeText={setUserName}
           InputProps={{
             autoCapitalize: "none",
           }}
@@ -79,30 +75,42 @@ const RegisterPage = () => {
 
         <View style={{ height: 20 }} />
 
-        <Button title="Get OTP" onPress={handleGetOtp} />
+        <FormInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          InputProps={{
+            autoCapitalize: "none",
+          }}
+        />
 
-        {showOtpInput && (
-          <>
-            <View style={{ height: 40 }} />
+        <View style={{ height: 20 }} />
 
-            <Typography
-              variant="h3"
+        <FormInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          trailingIcon={
+            <Octicons
+              name={showPassword ? "eye-closed" : "eye"}
+              size={24}
+              color={theme.colors.textInputIconColor}
+              onPress={toggleShowPassword}
               style={{
-                color: "grey",
+                marginRight: 10,
               }}
-            >
-              Enter OTP sent to your email
-            </Typography>
+            />
+          }
+        />
 
-            <View style={{ height: 30 }} />
+        <View style={{ height: 20 }} />
 
-            <OtpInput numInputs={6} onChange={setOtp} />
-
-            <View style={{ height: 20 }} />
-
-            <Button title="Verify OTP" onPress={handleVerifyOtp} />
-          </>
-        )}
+        <Button
+          title="Register"
+          onPress={() => {
+            console.log("Register");
+          }}
+        />
 
         <View style={{ height: 40 }} />
 
