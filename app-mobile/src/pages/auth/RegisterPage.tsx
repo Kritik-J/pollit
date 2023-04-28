@@ -1,3 +1,5 @@
+// TODO: Create reusable component for error messages
+
 import {
   StyleSheet,
   Text,
@@ -13,14 +15,31 @@ import Typography from "@src/components/Typography";
 import useTheme from "@src/hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
+import { useAppDispatch } from "@src/hooks/useReduce";
+import { registerUser, clearError } from "@src/redux/authSlice";
+import useAuth from "@src/hooks/useAuth";
 
 const RegisterPage = () => {
   const { theme } = useTheme();
-  const [name, setName] = React.useState<string>("");
-  const [userName, setUserName] = React.useState<string>("");
-  const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
+  const dispatch = useAppDispatch();
+
+  const [formInput, setFormInput] = React.useState({
+    name: "",
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = React.useState({
+    name: "",
+    userName: "",
+    email: "",
+    password: "",
+  });
+
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
+
+  const { error, isLoading } = useAuth();
 
   const nav = useNavigation();
 
@@ -31,6 +50,96 @@ const RegisterPage = () => {
   function navigateToLogin() {
     nav.navigate("Login" as never);
   }
+
+  const handleFormInput = (key: string, value: string) => {
+    setFormInput({
+      ...formInput,
+      [key]: value,
+    });
+
+    setErrors({ ...errors, [key]: "" });
+
+    if (value === "" || value.trim() === "") {
+      setErrors({
+        ...errors,
+        [key]: "This field is required",
+      });
+    }
+
+    if (key === "email" && !value.includes("@")) {
+      setErrors({
+        ...errors,
+        [key]: "Invalid email address",
+      });
+    }
+
+    if (key === "password" && value.length < 8) {
+      setErrors({
+        ...errors,
+        [key]: "Password must be at least 8 characters",
+      });
+    }
+
+    if (key === "userName" && value.length < 6) {
+      setErrors({
+        ...errors,
+        [key]: "Username must be at least 6 characters",
+      });
+    }
+  };
+
+  function handleRegister() {
+    if (formInput.name === "" || formInput.name.trim() === "") {
+      setErrors({
+        ...errors,
+        name: "This field is required",
+      });
+      return;
+    }
+
+    if (formInput.userName === "" || formInput.userName.trim() === "") {
+      setErrors({
+        ...errors,
+        userName: "This field is required",
+      });
+      return;
+    }
+
+    if (formInput.email === "" || formInput.email.trim() === "") {
+      setErrors({
+        ...errors,
+        email: "This field is required",
+      });
+      return;
+    }
+
+    if (formInput.password === "" || formInput.password.trim() === "") {
+      setErrors({
+        ...errors,
+        password: "This field is required",
+      });
+      return;
+    }
+
+    if (
+      errors.email !== "" ||
+      errors.name !== "" ||
+      errors.userName !== "" ||
+      errors.password !== ""
+    ) {
+      return;
+    }
+
+    dispatch(registerUser(formInput));
+  }
+
+  React.useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        dispatch(clearError());
+      }, 3000);
+    }
+  }, [error]);
 
   return (
     <SafeAreaView
@@ -45,6 +154,8 @@ const RegisterPage = () => {
           backgroundColor: theme.colors.backgroundColor,
         }}
       >
+        {/* Header */}
+
         <Typography variant="h1">Welcome to PollIt</Typography>
 
         <View style={{ height: 5 }} />
@@ -60,36 +171,75 @@ const RegisterPage = () => {
 
         <View style={{ height: 30 }} />
 
-        <FormInput placeholder="Name" value={name} onChangeText={setName} />
+        {/* Name input */}
+
+        <FormInput
+          placeholder="Name"
+          value={formInput.name}
+          onChangeText={(text) => handleFormInput("name", text)}
+          status={errors.name !== "" ? "error" : ""}
+        />
+        {errors.name !== "" && (
+          <Typography
+            variant="body"
+            style={{ color: theme.colors.errorColor, marginTop: 10 }}
+          >
+            {errors.name}
+          </Typography>
+        )}
 
         <View style={{ height: 20 }} />
+
+        {/* Username input */}
 
         <FormInput
           placeholder="Username"
-          value={userName}
-          onChangeText={setUserName}
+          value={formInput.userName}
+          onChangeText={(text) => handleFormInput("userName", text)}
           InputProps={{
             autoCapitalize: "none",
           }}
+          status={errors.userName !== "" ? "error" : ""}
         />
+        {errors.userName !== "" && (
+          <Typography
+            variant="body"
+            style={{ color: theme.colors.errorColor, marginTop: 10 }}
+          >
+            {errors.userName}
+          </Typography>
+        )}
 
         <View style={{ height: 20 }} />
+
+        {/* Email input */}
 
         <FormInput
           placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
+          value={formInput.email}
+          onChangeText={(text) => handleFormInput("email", text)}
           InputProps={{
             autoCapitalize: "none",
           }}
+          status={errors.email !== "" ? "error" : ""}
         />
+        {errors.email !== "" && (
+          <Typography
+            variant="body"
+            style={{ color: theme.colors.errorColor, marginTop: 10 }}
+          >
+            {errors.email}
+          </Typography>
+        )}
 
         <View style={{ height: 20 }} />
 
+        {/* Password input */}
+
         <FormInput
           placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
+          value={formInput.password}
+          onChangeText={(text) => handleFormInput("password", text)}
           trailingIcon={
             <Octicons
               name={showPassword ? "eye-closed" : "eye"}
@@ -101,18 +251,52 @@ const RegisterPage = () => {
               }}
             />
           }
+          status={errors.password !== "" ? "error" : ""}
         />
+        {errors.password !== "" && (
+          <Typography
+            variant="body"
+            style={{ color: theme.colors.errorColor, marginTop: 10 }}
+          >
+            {errors.password}
+          </Typography>
+        )}
 
         <View style={{ height: 20 }} />
 
+        {/* Register button */}
+
         <Button
           title="Register"
-          onPress={() => {
-            console.log("Register");
-          }}
+          onPress={handleRegister}
+          loading={isLoading}
+          disabled={
+            errors.email !== "" ||
+            errors.name !== "" ||
+            errors.userName !== "" ||
+            errors.password !== "" ||
+            isLoading
+          }
         />
 
+        {/* Error message */}
+
+        {error && (
+          <Typography
+            variant="body"
+            style={{
+              textAlign: "center",
+              color: theme.colors.errorColor,
+              marginTop: 40,
+            }}
+          >
+            {error}
+          </Typography>
+        )}
+
         <View style={{ height: 40 }} />
+
+        {/* Footer */}
 
         <Typography
           variant="body"

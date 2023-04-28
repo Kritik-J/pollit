@@ -34,7 +34,7 @@ const Button = (props: ButtonProps) => {
     borderWidth = 1,
     borderColor = theme.colors.primaryButtonColor,
     loading = false,
-    disabled = false,
+    disabled = loading,
     fontSize = 14,
     fontColor = theme.colors.primaryButtonTextColor,
     spinnerColor = theme.colors.primaryButtonTextColor,
@@ -53,7 +53,7 @@ const Button = (props: ButtonProps) => {
         borderColor,
         justifyContent: "center",
         alignItems: "center",
-        opacity: disabled ? 0.85 : 1,
+        opacity: disabled ? 0.75 : 1,
         ...buttonStyle,
       }}
       onPress={onPress}

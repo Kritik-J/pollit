@@ -1,5 +1,5 @@
 import React from "react";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import useTheme from "@src/hooks/useTheme";
@@ -15,6 +15,9 @@ import { useAppDispatch } from "@src/hooks/useReduce";
 import ProfilePage from "@src/pages/ProfilePage";
 import CreatePollPage from "@src/pages/CreatePollPage";
 import PollPage from "@src/pages/PollPage";
+import useAuth from "@src/hooks/useAuth";
+import { getMyProfile } from "@src/redux/authSlice";
+import Typography from "@src/components/Typography";
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -31,6 +34,29 @@ const Navigation = () => {
     }
   }, [colorScheme]);
 
+  const { isAuth, isLoadingProfile } = useAuth();
+
+  const { theme } = useTheme();
+
+  React.useEffect(() => {
+    dispatch(getMyProfile());
+  }, []);
+
+  const Loader = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: theme.colors.backgroundColor,
+        }}
+      >
+        <Typography variant="h3">Loading...</Typography>
+      </View>
+    );
+  };
+
   return (
     <NavigationContainer>
       <StatusBar style={mode === "dark" ? "light" : "dark"} />
@@ -45,13 +71,21 @@ const Navigation = () => {
             },
           }),
         }}
-        initialRouteName="Auth"
+        initialRouteName={!isLoadingProfile && isAuth ? "Root" : "Auth"}
       >
-        <Stack.Screen name="Auth" component={AuthNavigator} />
+        {isLoadingProfile ? (
+          <Stack.Screen name="Loading" component={Loader} />
+        ) : (
+          <>
+            {isAuth ? (
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+            ) : (
+              <Stack.Screen name="Auth" component={AuthNavigator} />
+            )}
 
-        <Stack.Screen name="Root" component={BottomTabNavigator} />
-
-        <Stack.Screen name="Poll" component={PollPage} />
+            <Stack.Screen name="Poll" component={PollPage} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

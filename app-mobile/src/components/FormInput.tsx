@@ -22,7 +22,7 @@ type FormInputProps = {
   secureTextEntry?: boolean;
   keyboardType?: any;
   InputProps?: any;
-  status?: "error" | "success" | "warning" | "info";
+  status?: "error" | "success" | "warning" | "info" | "";
 };
 
 const FormInput = (Props: FormInputProps) => {
@@ -51,7 +51,9 @@ const FormInput = (Props: FormInputProps) => {
     status,
   } = Props;
 
-  const statusStyle = (status: "error" | "success" | "warning" | "info") => {
+  const statusStyle = (
+    status: "error" | "success" | "warning" | "info" | ""
+  ) => {
     switch (status) {
       case "error":
         return theme.colors.errorColor;

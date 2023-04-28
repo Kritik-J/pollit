@@ -1,3 +1,5 @@
+// TODO: Create reusable component for error messages
+
 import {
   StyleSheet,
   ScrollView,
@@ -13,11 +15,40 @@ import FormInput from "@src/components/FormInput";
 import Typography from "@src/components/Typography";
 import useTheme from "@src/hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
+import useAuth from "@src/hooks/useAuth";
+import { useAppDispatch } from "@src/hooks/useReduce";
+import { clearError, loginUser } from "@src/redux/authSlice";
 
 const LoginPage = () => {
-  const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
+  const [formInput, setFormInput] = React.useState({
+    userNameOrEmail: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = React.useState({
+    userNameOrEmail: "",
+    password: "",
+  });
+
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
+
+  const { error, isLoading } = useAuth();
+
+  const handleFormInput = (key: string, value: string) => {
+    setFormInput({
+      ...formInput,
+      [key]: value,
+    });
+
+    setErrors({ ...errors, [key]: "" });
+
+    if (value === "" || value.trim() === "") {
+      setErrors({
+        ...errors,
+        [key]: "This field is required",
+      });
+    }
+  };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -31,9 +62,42 @@ const LoginPage = () => {
     nav.navigate("Register" as never);
   }
 
-  function navigateToHome() {
-    nav.navigate("Root" as never);
+  const dispatch = useAppDispatch();
+
+  function handleLogin() {
+    if (
+      formInput.userNameOrEmail === "" ||
+      formInput.userNameOrEmail.trim() === ""
+    ) {
+      setErrors({
+        ...errors,
+        userNameOrEmail: "This field is required",
+      });
+      return;
+    }
+
+    if (formInput.password === "" || formInput.password.trim() === "") {
+      setErrors({
+        ...errors,
+        password: "This field is required",
+      });
+      return;
+    }
+
+    if (errors.userNameOrEmail !== "" || errors.password !== "") {
+      return;
+    }
+
+    dispatch(loginUser(formInput));
   }
+
+  React.useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        dispatch(clearError());
+      }, 3000);
+    }
+  }, [error]);
 
   return (
     <SafeAreaView
@@ -48,6 +112,8 @@ const LoginPage = () => {
           backgroundColor: theme.colors.backgroundColor,
         }}
       >
+        {/* Header */}
+
         <Typography variant="h1">Welcome to PollIt</Typography>
 
         <View style={{ height: 5 }} />
@@ -63,22 +129,35 @@ const LoginPage = () => {
 
         <View style={{ height: 30 }} />
 
+        {/* Username or Email input */}
+
         <FormInput
           placeholder="Username or Email"
-          value={email}
-          onChangeText={setEmail}
+          value={formInput.userNameOrEmail}
+          onChangeText={(text) => handleFormInput("userNameOrEmail", text)}
           keyboardType="email-address"
           InputProps={{
             autoCapitalize: "none",
           }}
+          status={errors.userNameOrEmail !== "" ? "error" : ""}
         />
+        {errors.userNameOrEmail !== "" && (
+          <Typography
+            variant="body"
+            style={{ color: theme.colors.errorColor, marginTop: 10 }}
+          >
+            {errors.userNameOrEmail}
+          </Typography>
+        )}
 
-        <View style={{ height: 10 }} />
+        <View style={{ height: 20 }} />
+
+        {/* Password input */}
 
         <FormInput
           placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
+          value={formInput.password}
+          onChangeText={(text) => handleFormInput("password", text)}
           secureTextEntry={!showPassword}
           trailingIcon={
             <Octicons
@@ -91,9 +170,20 @@ const LoginPage = () => {
               }}
             />
           }
+          status={errors.password !== "" ? "error" : ""}
         />
+        {errors.password !== "" && (
+          <Typography
+            variant="body"
+            style={{ color: theme.colors.errorColor, marginTop: 10 }}
+          >
+            {errors.password}
+          </Typography>
+        )}
 
-        <View style={{ height: 10 }} />
+        <View style={{ height: 20 }} />
+
+        {/* Forgot Password */}
 
         <Typography
           variant="body"
@@ -106,16 +196,35 @@ const LoginPage = () => {
 
         <View style={{ height: 20 }} />
 
+        {/* Login Button */}
+
         <Button
           title="Login"
-          onPress={() => {
-            console.log("Email: ", email);
-            console.log("Password: ", password);
-            navigateToHome();
-          }}
+          onPress={handleLogin}
+          loading={isLoading}
+          disabled={
+            errors.userNameOrEmail !== "" || errors.password !== "" || isLoading
+          }
         />
 
+        {/* Error Message */}
+
+        {error && (
+          <Typography
+            variant="body"
+            style={{
+              textAlign: "center",
+              color: theme.colors.errorColor,
+              marginTop: 40,
+            }}
+          >
+            {error}
+          </Typography>
+        )}
+
         <View style={{ height: 40 }} />
+
+        {/* Footer */}
 
         <Typography
           variant="body"
