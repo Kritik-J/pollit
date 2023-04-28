@@ -47,9 +47,6 @@ const ProfilePage = () => {
             onPress={() => {
               dispatch(logoutUser());
             }}
-            buttonStyle={{
-              marginHorizontal: 10,
-            }}
             loading={isLoading}
           />
         </>
