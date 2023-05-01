@@ -18,6 +18,12 @@ import PollPage from "@src/pages/PollPage";
 import useAuth from "@src/hooks/useAuth";
 import { getMyProfile } from "@src/redux/authSlice";
 import Typography from "@src/components/Typography";
+import {
+  HomeFilledIcon,
+  HomeIcon,
+  ProfileFilledIcon,
+  ProfileIcon,
+} from "@src/components/Svg";
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -127,8 +133,10 @@ export const BottomTabNavigator = () => {
             backgroundColor: theme.colors.bottomTabBarColor,
             borderTopWidth: 0,
           },
-          tabBarActiveTintColor: theme.colors.bottomTabBarActiveColor,
+          tabBarActiveTintColor: theme.colors.bottomTabBarActiveTintColor,
+          // tabBarActiveTintColor: theme.colors.bottomTabBarInactiveTintColor,
           tabBarInactiveTintColor: theme.colors.bottomTabBarInactiveTintColor,
+          tabBarShowLabel: false,
         }}
       >
         <BottomTab.Screen
@@ -136,9 +144,12 @@ export const BottomTabNavigator = () => {
           component={HomePage}
           options={{
             title: "Home",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-home" color={color} size={size} />
-            ),
+            tabBarIcon: ({ color, focused }) =>
+              focused ? (
+                <HomeFilledIcon fill={color} />
+              ) : (
+                <HomeIcon fill={color} />
+              ),
           }}
         />
 
@@ -148,7 +159,7 @@ export const BottomTabNavigator = () => {
           options={{
             title: "Create",
             tabBarLabel: () => null,
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color }) => (
               <Ionicons name="ios-add-circle-outline" color={color} size={32} />
             ),
           }}
@@ -159,9 +170,13 @@ export const BottomTabNavigator = () => {
           component={ProfilePage}
           options={{
             title: "Profile",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-person" color={color} size={size} />
-            ),
+
+            tabBarIcon: ({ color, focused }) =>
+              focused ? (
+                <ProfileFilledIcon fill={color} />
+              ) : (
+                <ProfileIcon fill={color} />
+              ),
           }}
         />
       </BottomTab.Navigator>

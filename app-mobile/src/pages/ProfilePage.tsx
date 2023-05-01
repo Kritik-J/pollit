@@ -36,7 +36,7 @@ const ProfilePage = () => {
 
               <View style={{ height: 5 }} />
 
-              <Typography variant="body">{user.userName}</Typography>
+              <Typography variant="body">@{user.userName}</Typography>
             </View>
           </View>
 
@@ -60,5 +60,6 @@ export default ProfilePage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
   },
 });

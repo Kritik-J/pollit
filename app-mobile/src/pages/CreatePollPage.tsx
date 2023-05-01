@@ -1,30 +1,124 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import React from "react";
 import useTheme from "@src/hooks/useTheme";
 import FormInput from "@src/components/FormInput";
 import Typography from "@src/components/Typography";
+import Picker from "@src/components/Picker";
+import { MinusIcon, PlusIcon } from "@src/components/Svg";
+import { Pressable } from "react-native";
+
+const answerTypes = [
+  { value: "Text" },
+  { value: "Radio" },
+  { value: "Checkbox" },
+];
+
+type IForm = {
+  questions: {
+    id: string;
+    question: string;
+    answerType: string;
+    options?: string[];
+  }[];
+};
 
 const CreatePollPage = () => {
   const { theme } = useTheme();
   const [title, setTitle] = React.useState<string>("");
+  const [form, setForm] = React.useState<IForm>({
+    questions: [
+      {
+        id: "1",
+        question: "",
+        answerType: "",
+      },
+    ],
+  });
+
+  const handleAddQuestion = () => {
+    setForm({
+      questions: [
+        ...form.questions,
+        {
+          id: `${form.questions.length + 1}`,
+          question: "",
+          answerType: "",
+        },
+      ],
+    });
+  };
+
+  const handleRemoveQuestion = (id: string) => {
+    if (form.questions.length === 1) return;
+
+    if (id === `${form.questions.length}`) {
+      setForm({
+        questions: form.questions.filter((item) => item.id !== id),
+      });
+    } else {
+      const newQuestions = form.questions.filter((item) => item.id !== id);
+
+      const updatedQuestions = newQuestions.map((item, index) => {
+        return {
+          ...item,
+          id: `${index + 1}`,
+        };
+      });
+
+      setForm({
+        questions: updatedQuestions,
+      });
+    }
+  };
 
   return (
-    <View
-      style={[
+    <ScrollView
+      contentContainerStyle={[
         styles.container,
         { backgroundColor: theme.colors.backgroundColor },
       ]}
     >
       <Typography variant="h2">Create a new poll</Typography>
 
-      <View style={{ height: 20 }} />
+      <View style={{ height: 30 }} />
 
       <FormInput
         placeholder="Poll title"
         value={title}
         onChangeText={setTitle}
       />
-    </View>
+
+      <View style={{ height: 20 }} />
+
+      {form.questions.map((item, index) => (
+        <View style={{ flexDirection: "row", marginTop: 10 }} key={index}>
+          {index === form.questions.length - 1 ? (
+            <Pressable style={styles.plusIcon} onPress={handleAddQuestion}>
+              <PlusIcon fill="#ffffff" />
+            </Pressable>
+          ) : (
+            <Pressable
+              style={styles.minusIcon}
+              onPress={() => handleRemoveQuestion(item.id)}
+            >
+              <MinusIcon fill="#ffffff" />
+            </Pressable>
+          )}
+
+          <View style={{ flex: 1 }}>
+            <FormInput
+              placeholder={`Question ${item.id}`}
+              value=""
+              onChangeText={() => {}}
+            />
+
+            <View style={{ height: 10 }} />
+
+            <Picker options={answerTypes} onChange={() => {}} />
+          </View>
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -32,7 +126,27 @@ export default CreatePollPage;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 10,
+  },
+
+  plusIcon: {
+    marginRight: 10,
+    borderRadius: 5,
+    backgroundColor: "#537FE7",
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  minusIcon: {
+    marginRight: 10,
+    borderRadius: 5,
+    backgroundColor: "#FF0000",
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
