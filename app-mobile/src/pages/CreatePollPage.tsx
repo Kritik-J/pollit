@@ -51,25 +51,38 @@ const CreatePollPage = () => {
   const handleRemoveQuestion = (id: string) => {
     if (form.questions.length === 1) return;
 
-    if (id === `${form.questions.length}`) {
-      setForm({
-        questions: form.questions.filter((item) => item.id !== id),
-      });
-    } else {
-      const newQuestions = form.questions.filter((item) => item.id !== id);
+    const newQuestions = form.questions.filter((item) => item.id !== id);
 
-      const updatedQuestions = newQuestions.map((item, index) => {
+    const updatedQuestions = newQuestions.map((item, index) => {
+      return {
+        ...item,
+        id: `${index + 1}`,
+      };
+    });
+
+    setForm({
+      questions: updatedQuestions,
+    });
+  };
+
+  const handleUpdateAnswerType = (qid: string, value: string) => {
+    const newQuestions = form.questions.map((item) => {
+      if (item.id === qid) {
         return {
           ...item,
-          id: `${index + 1}`,
+          answerType: value,
         };
-      });
+      }
 
-      setForm({
-        questions: updatedQuestions,
-      });
-    }
+      return item;
+    });
+
+    setForm({
+      questions: newQuestions,
+    });
   };
+
+  console.log(form);
 
   return (
     <ScrollView
@@ -88,10 +101,13 @@ const CreatePollPage = () => {
         onChangeText={setTitle}
       />
 
-      <View style={{ height: 20 }} />
+      <View style={{ height: 30 }} />
 
       {form.questions.map((item, index) => (
-        <View style={{ flexDirection: "row", marginTop: 10 }} key={index}>
+        <View
+          style={{ flexDirection: "row", marginTop: index === 0 ? 0 : 20 }}
+          key={index}
+        >
           {index === form.questions.length - 1 ? (
             <Pressable style={styles.plusIcon} onPress={handleAddQuestion}>
               <PlusIcon fill="#ffffff" />
@@ -114,10 +130,12 @@ const CreatePollPage = () => {
 
             <View style={{ height: 10 }} />
 
+            {/* when question removed its not answerTypes inside picker updating */}
             <Picker
+              qid={item.id}
               defaultValue={answerTypes[0].value}
               options={answerTypes}
-              onChange={() => {}}
+              onChange={handleUpdateAnswerType}
             />
           </View>
         </View>

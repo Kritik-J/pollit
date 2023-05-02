@@ -6,25 +6,26 @@ import { DownIcon } from "./Svg";
 
 type IPickerProps = {
   defaultValue?: string;
-
+  qid?: string;
   options: {
     // id: string;
     value: string;
   }[];
-
   onChange: Function;
 };
 
 const Picker = (props: IPickerProps) => {
-  const { defaultValue, options, onChange } = props;
+  const { defaultValue, qid, options, onChange } = props;
   const { theme } = useTheme();
   const [showOptions, setShowOptions] = React.useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = React.useState<string>(
-    defaultValue || ""
-  );
+  const [selectedOption, setSelectedOption] = React.useState<string>();
 
   React.useEffect(() => {
-    onChange(selectedOption);
+    setSelectedOption(defaultValue);
+  }, [defaultValue]);
+
+  React.useEffect(() => {
+    onChange(qid || "", selectedOption);
   }, [selectedOption]);
 
   return (
