@@ -82,8 +82,6 @@ const CreatePollPage = () => {
     });
   };
 
-  console.log(form);
-
   return (
     <ScrollView
       contentContainerStyle={[
@@ -130,10 +128,8 @@ const CreatePollPage = () => {
 
             <View style={{ height: 10 }} />
 
-            {/* when question removed its not answerTypes inside picker updating */}
             <Picker
               qid={item.id}
-              defaultValue={answerTypes[0].value}
               options={answerTypes}
               onChange={handleUpdateAnswerType}
             />
