@@ -114,7 +114,11 @@ const CreatePollPage = () => {
 
             <View style={{ height: 10 }} />
 
-            <Picker options={answerTypes} onChange={() => {}} />
+            <Picker
+              defaultValue={answerTypes[0].value}
+              options={answerTypes}
+              onChange={() => {}}
+            />
           </View>
         </View>
       ))}

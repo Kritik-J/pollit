@@ -5,6 +5,8 @@ import Typography from "./Typography";
 import { DownIcon } from "./Svg";
 
 type IPickerProps = {
+  defaultValue?: string;
+
   options: {
     // id: string;
     value: string;
@@ -14,10 +16,12 @@ type IPickerProps = {
 };
 
 const Picker = (props: IPickerProps) => {
+  const { defaultValue, options, onChange } = props;
   const { theme } = useTheme();
   const [showOptions, setShowOptions] = React.useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = React.useState<string>("");
-  const { options, onChange } = props;
+  const [selectedOption, setSelectedOption] = React.useState<string>(
+    defaultValue || ""
+  );
 
   React.useEffect(() => {
     onChange(selectedOption);
