@@ -3,6 +3,9 @@ import React from "react";
 import useTheme from "@src/hooks/useTheme";
 import Typography from "./Typography";
 import { DownIcon } from "./Svg";
+import useForm from "@src/hooks/useForm";
+import { setPollForm } from "@src/redux/formSlice";
+import { useAppDispatch } from "@src/hooks/useReduce";
 
 type IPickerProps = {
   qid?: string;
@@ -10,23 +13,45 @@ type IPickerProps = {
     // id: string;
     value: string;
   }[];
-  onChange: Function;
 };
 
 const Picker = (props: IPickerProps) => {
-  const { options, onChange, qid } = props;
+  const { options, qid } = props;
   const { theme } = useTheme();
+  const { pollForm } = useForm();
+  const dispatch = useAppDispatch();
   const [showOptions, setShowOptions] = React.useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = React.useState<string>();
+  const { questions } = pollForm;
+
+  const selectedOption = questions.find((item) => item.id === qid)?.answerType;
 
   const handleSelectOption = (value: string) => {
-    setSelectedOption(value);
     setShowOptions(false);
-  };
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: questions.map((item) =>
+          // if value is checkbox or radio, then set 1 option by default
 
-  React.useEffect(() => {
-    onChange(qid, selectedOption);
-  }, [selectedOption]);
+          item.id === qid
+            ? {
+                ...item,
+                answerType: value,
+                options:
+                  value === "Checkbox" || value === "Radio"
+                    ? [
+                        {
+                          id: "1",
+                          value: "",
+                        },
+                      ]
+                    : undefined,
+              }
+            : item
+        ),
+      })
+    );
+  };
 
   return (
     <View

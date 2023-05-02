@@ -6,6 +6,10 @@ import Typography from "@src/components/Typography";
 import Picker from "@src/components/Picker";
 import { MinusIcon, PlusIcon } from "@src/components/Svg";
 import { Pressable } from "react-native";
+import useForm from "@src/hooks/useForm";
+import { setPollForm } from "@src/redux/formSlice";
+import { useAppDispatch } from "@src/hooks/useReduce";
+import Button from "@src/components/Button";
 
 const answerTypes = [
   { value: "Text" },
@@ -13,73 +17,147 @@ const answerTypes = [
   { value: "Checkbox" },
 ];
 
-type IForm = {
-  questions: {
-    id: string;
-    question: string;
-    answerType: string;
-    options?: string[];
-  }[];
-};
-
 const CreatePollPage = () => {
   const { theme } = useTheme();
-  const [title, setTitle] = React.useState<string>("");
-  const [form, setForm] = React.useState<IForm>({
-    questions: [
-      {
-        id: "1",
-        question: "",
-        answerType: "",
-      },
-    ],
-  });
+  const { pollForm } = useForm();
+  const dispatch = useAppDispatch();
 
   const handleAddQuestion = () => {
-    setForm({
-      questions: [
-        ...form.questions,
-        {
-          id: `${form.questions.length + 1}`,
-          question: "",
-          answerType: "",
-        },
-      ],
-    });
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: [
+          ...pollForm.questions,
+          {
+            id: pollForm.questions.length + 1,
+            question: "",
+            answerType: "",
+            required: false,
+          },
+        ],
+      })
+    );
   };
 
-  const handleRemoveQuestion = (id: string) => {
-    if (form.questions.length === 1) return;
+  const handleRemoveQuestion = (qid: string) => {
+    const updatedQuestions = pollForm.questions.filter(
+      (item) => item.id !== qid
+    );
 
-    const newQuestions = form.questions.filter((item) => item.id !== id);
+    const updatedQuestionsWithId = updatedQuestions.map((item, index) => ({
+      ...item,
+      id: index + 1,
+    }));
 
-    const updatedQuestions = newQuestions.map((item, index) => {
-      return {
-        ...item,
-        id: `${index + 1}`,
-      };
-    });
-
-    setForm({
-      questions: updatedQuestions,
-    });
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: updatedQuestionsWithId,
+      })
+    );
   };
 
-  const handleUpdateAnswerType = (qid: string, value: string) => {
-    const newQuestions = form.questions.map((item) => {
+  const handleAddOption = (qid: string) => {
+    const updatedQuestions = pollForm.questions.map((item) => {
       if (item.id === qid) {
         return {
           ...item,
-          answerType: value,
+          options: [
+            ...(item.options || []),
+            {
+              id: (item.options && item.options.length + 1) || 1,
+              value: "",
+            },
+          ],
         };
       }
 
       return item;
     });
 
-    setForm({
-      questions: newQuestions,
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: updatedQuestions,
+      })
+    );
+  };
+
+  const handleRemoveOption = (qid: string, oid: string) => {
+    const updatedQuestions = pollForm.questions.map((item) => {
+      if (item.id === qid) {
+        return {
+          ...item,
+          options: item.options?.filter((option) => option.id !== oid),
+        };
+      }
+
+      return item;
     });
+
+    const updatedQuestionsWithId = updatedQuestions.map((item) => ({
+      ...item,
+      options: item.options?.map((option, index) => ({
+        ...option,
+        id: index + 1,
+      })),
+    }));
+
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: updatedQuestionsWithId,
+      })
+    );
+  };
+
+  const handleAddQuestionValue = (qid: string, value: string) => {
+    const updatedQuestions = pollForm.questions.map((item) => {
+      if (item.id === qid) {
+        return {
+          ...item,
+          question: value,
+        };
+      }
+
+      return item;
+    });
+
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: updatedQuestions,
+      })
+    );
+  };
+
+  const handleAddOptionValue = (qid: string, oid: String, value: string) => {
+    const updatedQuestions = pollForm.questions.map((item) => {
+      if (item.id === qid) {
+        return {
+          ...item,
+          options: item.options?.map((option) => {
+            if (option.id === oid) {
+              return {
+                ...option,
+                value,
+              };
+            }
+
+            return option;
+          }),
+        };
+      }
+
+      return item;
+    });
+
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        questions: updatedQuestions,
+      })
+    );
   };
 
   return (
@@ -95,25 +173,27 @@ const CreatePollPage = () => {
 
       <FormInput
         placeholder="Poll title"
-        value={title}
-        onChangeText={setTitle}
+        value={pollForm.title}
+        onChangeText={(value) => {
+          dispatch(setPollForm({ ...pollForm, title: value }));
+        }}
       />
 
       <View style={{ height: 30 }} />
 
-      {form.questions.map((item, index) => (
+      {pollForm.questions.map((q, index) => (
         <View
           style={{ flexDirection: "row", marginTop: index === 0 ? 0 : 20 }}
           key={index}
         >
-          {index === form.questions.length - 1 ? (
+          {index === pollForm.questions.length - 1 ? (
             <Pressable style={styles.plusIcon} onPress={handleAddQuestion}>
               <PlusIcon fill="#ffffff" />
             </Pressable>
           ) : (
             <Pressable
               style={styles.minusIcon}
-              onPress={() => handleRemoveQuestion(item.id)}
+              onPress={() => handleRemoveQuestion(q.id)}
             >
               <MinusIcon fill="#ffffff" />
             </Pressable>
@@ -121,21 +201,72 @@ const CreatePollPage = () => {
 
           <View style={{ flex: 1 }}>
             <FormInput
-              placeholder={`Question ${item.id}`}
-              value=""
-              onChangeText={() => {}}
+              placeholder={`Question ${q.id}`}
+              value={q.question}
+              onChangeText={(value) => handleAddQuestionValue(q.id, value)}
             />
 
             <View style={{ height: 10 }} />
 
-            <Picker
-              qid={item.id}
-              options={answerTypes}
-              onChange={handleUpdateAnswerType}
-            />
+            <Picker qid={q.id} options={answerTypes} />
+
+            {q.answerType === "Radio" ||
+            (q.answerType === "Checkbox" && q.options) ? (
+              <>
+                <View style={{ height: 10 }} />
+
+                {q.options?.map((opt, index) => (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: index === 0 ? 0 : 10,
+                    }}
+                    key={index}
+                  >
+                    {index === (q.options && q.options?.length - 1) ? (
+                      <Pressable
+                        style={styles.plusIcon}
+                        onPress={() => handleAddOption(q.id)}
+                      >
+                        <PlusIcon fill="#ffffff" />
+                      </Pressable>
+                    ) : (
+                      <Pressable
+                        style={styles.minusIcon}
+                        onPress={() => handleRemoveOption(q.id, opt.id)}
+                      >
+                        <MinusIcon fill="#ffffff" />
+                      </Pressable>
+                    )}
+
+                    <View style={{ flex: 1 }}>
+                      <FormInput
+                        placeholder={`Option ${opt.id}`}
+                        value={opt.value}
+                        onChangeText={(value) => {
+                          handleAddOptionValue(q.id, opt.id, value);
+                        }}
+                        inputStyle={{ paddingVertical: 6 }}
+                      />
+                    </View>
+                  </View>
+                ))}
+              </>
+            ) : null}
           </View>
         </View>
       ))}
+
+      {/* add date picker here */}
+
+      <View style={{ height: 30 }} />
+
+      <Button
+        title="Create poll"
+        onPress={() => {
+          console.log(pollForm);
+        }}
+      />
     </ScrollView>
   );
 };
@@ -152,6 +283,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     backgroundColor: "#537FE7",
+    // borderColor: "#537FE7",
+    // borderWidth: 1,
     width: 30,
     height: 30,
     justifyContent: "center",
@@ -162,6 +295,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     backgroundColor: "#FF0000",
+    // borderColor: "#FF0000",
+    // borderWidth: 2,
     width: 30,
     height: 30,
     justifyContent: "center",

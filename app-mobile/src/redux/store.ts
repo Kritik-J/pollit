@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import uiReducer from "./uiSlice";
 import authReducer from "./authSlice";
+import formReducer from "./formSlice";
 
 const store = configureStore({
   reducer: {
     ui: uiReducer,
     auth: authReducer,
+    form: formReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
