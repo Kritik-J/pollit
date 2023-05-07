@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import useAuth from "@src/hooks/useAuth";
 import { useAppDispatch } from "@src/hooks/useReduce";
 import { clearError, loginUser } from "@src/redux/authSlice";
+import { checkNull } from "@src/utils/validators";
 
 const LoginPage = () => {
   const [formInput, setFormInput] = React.useState({
@@ -41,13 +42,6 @@ const LoginPage = () => {
     });
 
     setErrors({ ...errors, [key]: "" });
-
-    if (value === "" || value.trim() === "") {
-      setErrors({
-        ...errors,
-        [key]: "This field is required",
-      });
-    }
   };
 
   const toggleShowPassword = () => {
@@ -65,21 +59,18 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
 
   function handleLogin() {
-    if (
-      formInput.userNameOrEmail === "" ||
-      formInput.userNameOrEmail.trim() === ""
-    ) {
+    if (checkNull(formInput.userNameOrEmail)) {
       setErrors({
         ...errors,
-        userNameOrEmail: "This field is required",
+        userNameOrEmail: "Email is required",
       });
       return;
     }
 
-    if (formInput.password === "" || formInput.password.trim() === "") {
+    if (checkNull(formInput.password)) {
       setErrors({
         ...errors,
-        password: "This field is required",
+        password: "Password is required",
       });
       return;
     }

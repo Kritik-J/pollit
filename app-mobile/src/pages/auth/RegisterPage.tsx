@@ -18,6 +18,7 @@ import { Octicons } from "@expo/vector-icons";
 import { useAppDispatch } from "@src/hooks/useReduce";
 import { registerUser, clearError } from "@src/redux/authSlice";
 import useAuth from "@src/hooks/useAuth";
+import { checkEmail, checkLength, checkNull } from "@src/utils/validators";
 
 const RegisterPage = () => {
   const { theme } = useTheme();
@@ -58,65 +59,53 @@ const RegisterPage = () => {
     });
 
     setErrors({ ...errors, [key]: "" });
-
-    if (value === "" || value.trim() === "") {
-      setErrors({
-        ...errors,
-        [key]: "This field is required",
-      });
-    }
-
-    if (key === "email" && !value.includes("@")) {
-      setErrors({
-        ...errors,
-        [key]: "Invalid email address",
-      });
-    }
-
-    if (key === "password" && value.length < 8) {
-      setErrors({
-        ...errors,
-        [key]: "Password must be at least 8 characters",
-      });
-    }
-
-    if (key === "userName" && value.length < 6) {
-      setErrors({
-        ...errors,
-        [key]: "Username must be at least 6 characters",
-      });
-    }
   };
 
   function handleRegister() {
-    if (formInput.name === "" || formInput.name.trim() === "") {
+    if (checkNull(formInput.name)) {
       setErrors({
         ...errors,
-        name: "This field is required",
+        name: "Name is required",
       });
       return;
     }
 
-    if (formInput.userName === "" || formInput.userName.trim() === "") {
+    if (checkNull(formInput.userName)) {
       setErrors({
         ...errors,
-        userName: "This field is required",
+        userName: "Username is required",
       });
       return;
     }
 
-    if (formInput.email === "" || formInput.email.trim() === "") {
+    if (checkNull(formInput.email)) {
       setErrors({
         ...errors,
-        email: "This field is required",
+        email: "Email is required",
       });
       return;
     }
 
-    if (formInput.password === "" || formInput.password.trim() === "") {
+    if (checkEmail(formInput.email)) {
       setErrors({
         ...errors,
-        password: "This field is required",
+        email: "Email is invalid",
+      });
+      return;
+    }
+
+    if (checkNull(formInput.password)) {
+      setErrors({
+        ...errors,
+        password: "Password is required",
+      });
+      return;
+    }
+
+    if (checkLength(formInput.password, 8)) {
+      setErrors({
+        ...errors,
+        password: "Password must be at least 8 characters",
       });
       return;
     }

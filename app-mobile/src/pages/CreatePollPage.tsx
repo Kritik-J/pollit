@@ -160,6 +160,12 @@ const CreatePollPage = () => {
     );
   };
 
+  const iconStyle = {
+    fill: "#ffffff",
+    width: 16,
+    height: 16,
+  };
+
   return (
     <ScrollView
       contentContainerStyle={[
@@ -188,14 +194,14 @@ const CreatePollPage = () => {
         >
           {index === pollForm.questions.length - 1 ? (
             <Pressable style={styles.plusIcon} onPress={handleAddQuestion}>
-              <PlusIcon fill="#ffffff" />
+              <PlusIcon {...iconStyle} />
             </Pressable>
           ) : (
             <Pressable
               style={styles.minusIcon}
               onPress={() => handleRemoveQuestion(q.id)}
             >
-              <MinusIcon fill="#ffffff" />
+              <MinusIcon {...iconStyle} />
             </Pressable>
           )}
 
@@ -228,14 +234,14 @@ const CreatePollPage = () => {
                         style={styles.plusIcon}
                         onPress={() => handleAddOption(q.id)}
                       >
-                        <PlusIcon fill="#ffffff" />
+                        <PlusIcon {...iconStyle} />
                       </Pressable>
                     ) : (
                       <Pressable
                         style={styles.minusIcon}
                         onPress={() => handleRemoveOption(q.id, opt.id)}
                       >
-                        <MinusIcon fill="#ffffff" />
+                        <MinusIcon {...iconStyle} />
                       </Pressable>
                     )}
 
@@ -281,24 +287,24 @@ const styles = StyleSheet.create({
 
   plusIcon: {
     marginRight: 10,
-    borderRadius: 5,
     backgroundColor: "#537FE7",
     // borderColor: "#537FE7",
     // borderWidth: 1,
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
   },
 
   minusIcon: {
     marginRight: 10,
-    borderRadius: 5,
     backgroundColor: "#FF0000",
     // borderColor: "#FF0000",
     // borderWidth: 2,
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
   },
