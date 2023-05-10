@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "pollit-backend",
   "version": "1.0.0",
-  "description": "PaaS for college festivals",
+  "description": "Pollit backend",
   "main": "server.js",
   "type": "module",
   "scripts": {

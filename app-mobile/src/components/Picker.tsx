@@ -57,7 +57,10 @@ const Picker = (props: IPickerProps) => {
     <View
       style={[
         styles.container,
-        { borderColor: theme.colors.textInputBorderColor },
+        {
+          borderColor: theme.colors.textInputBorderColor,
+          backgroundColor: theme.colors.textInputBackgroundColor,
+        },
       ]}
     >
       <Pressable

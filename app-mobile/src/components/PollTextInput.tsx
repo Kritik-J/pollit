@@ -27,7 +27,7 @@ const PollTextInput = (props: PollTextInputProps) => {
     borderRadius = 5,
     borderWidth = 1,
     borderColor = theme.colors.textInputBorderColor,
-    backgroundColor = "transparent",
+    backgroundColor = theme.colors.textInputBackgroundColor,
     fontSize = 14,
     fontWeight = "normal",
     fontColor = theme.colors.textInputFontColor,

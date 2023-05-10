@@ -30,7 +30,7 @@ const Button = (props: ButtonProps) => {
     height = 48,
     width = "100%",
     backgroundColor = theme.colors.primaryButtonColor,
-    borderRadius = 5,
+    borderRadius = 10,
     borderWidth = 1,
     borderColor = theme.colors.primaryButtonColor,
     loading = false,

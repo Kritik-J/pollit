@@ -7,13 +7,19 @@ import {CookieRequest} from '../../interfaces.js';
 
 export const isAuthenticatedUser = catchAsync(
   async (req: CookieRequest, res: Response, next: NextFunction) => {
+    // check if the token is provided
+
     const token = req.cookies.jwttoken;
+
+    // if token is not provided, return error
 
     if (!token) {
       return next(
         new ErrErrorHandleror('Please login to access the resource', 401),
       );
     }
+
+    // if token is provided, verify it
 
     const decodedData = jwt.verify(
       token,
@@ -24,11 +30,17 @@ export const isAuthenticatedUser = catchAsync(
       exp: number;
     };
 
+    // check if the user still exists
+
     const user = await User.findById(decodedData._id);
+
+    // if user does not exist, return error
 
     if (!user) {
       return next(new ErrErrorHandleror('User not found', 404));
     }
+
+    // if user exists, set the user in the request object
 
     req.user = user;
 
