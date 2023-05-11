@@ -8,9 +8,9 @@ import { useNavigation } from "@react-navigation/native";
 
 type PollListItemProps = {
   poll: {
-    id: string;
+    _id: string;
     title: string;
-    user: {
+    createdBy: {
       id: string;
       name: string;
       userName: string;
@@ -24,10 +24,10 @@ type PollListItemProps = {
 const PollListItem = (props: PollListItemProps) => {
   const { poll, isLastItem } = props;
   const { theme } = useTheme();
-  const nav = useNavigation();
+  const nav = useNavigation() as any;
 
   function navigateToPoll() {
-    nav.navigate("Poll" as never);
+    nav.navigate("Poll", { pollId: poll._id });
   }
 
   return (
@@ -62,11 +62,12 @@ const PollListItem = (props: PollListItemProps) => {
               },
             ]}
           >
-            @{poll.user.userName}
+            @{poll.createdBy.userName}
           </Typography>
 
           <Typography variant="body" style={styles.date}>
-            {dayjs(poll.createdAt).format("DD/MM/YYYY HH:mm")}
+            {dayjs(poll.createdAt).format("DD/MM/YYYY")}&nbsp;•&nbsp;
+            {dayjs(poll.createdAt).format("hh:mm A")}
           </Typography>
         </View>
 

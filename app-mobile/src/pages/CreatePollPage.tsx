@@ -10,17 +10,22 @@ import useForm from "@src/hooks/useForm";
 import { setPollForm } from "@src/redux/formSlice";
 import { useAppDispatch } from "@src/hooks/useReduce";
 import Button from "@src/components/Button";
+import axios from "axios";
+import { API_URL } from "@src/utils/constants/api";
 
 const answerTypes = [
-  { value: "Text" },
-  { value: "Radio" },
-  { value: "Checkbox" },
+  { value: "text" },
+  { value: "radio" },
+  { value: "checkbox" },
 ];
 
 const CreatePollPage = () => {
   const { theme } = useTheme();
   const { pollForm } = useForm();
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = React.useState(false);
+
+  // Add new question
 
   const handleAddQuestion = () => {
     dispatch(
@@ -39,6 +44,8 @@ const CreatePollPage = () => {
     );
   };
 
+  // Remove question
+
   const handleRemoveQuestion = (qid: string) => {
     const updatedQuestions = pollForm.questions.filter(
       (item) => item.id !== qid
@@ -56,6 +63,8 @@ const CreatePollPage = () => {
       })
     );
   };
+
+  // Add new option
 
   const handleAddOption = (qid: string) => {
     const updatedQuestions = pollForm.questions.map((item) => {
@@ -82,6 +91,8 @@ const CreatePollPage = () => {
       })
     );
   };
+
+  // Remove option
 
   const handleRemoveOption = (qid: string, oid: string) => {
     const updatedQuestions = pollForm.questions.map((item) => {
@@ -111,6 +122,8 @@ const CreatePollPage = () => {
     );
   };
 
+  // Question value change
+
   const handleAddQuestionValue = (qid: string, value: string) => {
     const updatedQuestions = pollForm.questions.map((item) => {
       if (item.id === qid) {
@@ -130,6 +143,8 @@ const CreatePollPage = () => {
       })
     );
   };
+
+  // Answer type change
 
   const handleAddOptionValue = (qid: string, oid: String, value: string) => {
     const updatedQuestions = pollForm.questions.map((item) => {
@@ -158,6 +173,58 @@ const CreatePollPage = () => {
         questions: updatedQuestions,
       })
     );
+  };
+
+  const submitPoll = async () => {
+    try {
+      setLoading(true);
+
+      if (!pollForm.title) {
+        throw new Error("Please enter poll title");
+      }
+
+      if (pollForm.questions.length === 0) {
+        throw new Error("Please add at least one question");
+      }
+
+      if (pollForm.questions.some((q) => !q.question)) {
+        throw new Error("Please fill all questions");
+      }
+
+      if (pollForm.questions.some((q) => !q.answerType)) {
+        throw new Error("Please select answer type");
+      }
+
+      if (
+        pollForm.questions.some(
+          (q) =>
+            (q.answerType === "radio" || q.answerType === "checkbox") &&
+            q.options?.some((o) => !o.value)
+        )
+      ) {
+        throw new Error("Please fill all options");
+      }
+
+      const { data } = await axios.post(`${API_URL}/polls`, pollForm);
+
+      if (data) {
+        alert("Poll created successfully");
+      }
+
+      dispatch(
+        setPollForm({
+          title: "",
+          questions: [{ id: 1, question: "", answerType: "" }],
+          startAt: "",
+          endAt: "",
+        })
+      );
+
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      alert(error.message);
+    }
   };
 
   const iconStyle = {
@@ -216,8 +283,8 @@ const CreatePollPage = () => {
 
             <Picker qid={q.id} options={answerTypes} />
 
-            {q.answerType === "Radio" ||
-            (q.answerType === "Checkbox" && q.options) ? (
+            {q.answerType === "radio" ||
+            (q.answerType === "checkbox" && q.options) ? (
               <>
                 <View style={{ height: 10 }} />
 
@@ -267,12 +334,7 @@ const CreatePollPage = () => {
 
       <View style={{ height: 30 }} />
 
-      <Button
-        title="Create poll"
-        onPress={() => {
-          console.log(pollForm);
-        }}
-      />
+      <Button title="Create poll" onPress={submitPoll} loading={loading} />
     </ScrollView>
   );
 };

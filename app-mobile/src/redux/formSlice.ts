@@ -6,7 +6,7 @@ type PollFormState = {
     id: string;
     question: string;
     answerType: string;
-    required: boolean;
+    required?: boolean;
     options?: [
       {
         id: string;
@@ -14,8 +14,8 @@ type PollFormState = {
       }
     ];
   }[];
-  startDate: string;
-  endDate: string;
+  startAt: string;
+  endAt: string;
 };
 
 type FormState = {
@@ -30,11 +30,10 @@ const initialState: FormState = {
         id: "1",
         question: "",
         answerType: "",
-        required: false,
       },
     ],
-    startDate: "",
-    endDate: "",
+    startAt: "",
+    endAt: "",
   },
 };
 

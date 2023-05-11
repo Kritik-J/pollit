@@ -1,25 +1,48 @@
-import { StyleSheet, View, StatusBar, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import useTheme from "@src/hooks/useTheme";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import Typography from "@src/components/Typography";
-import { useNavigation } from "@react-navigation/native";
-import { polls } from "@assets/data/polls";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Radio from "@src/components/Radio";
 import Checkbox from "@src/components/Checkbox";
 import PollTextInput from "@src/components/PollTextInput";
 import Button from "@src/components/Button";
+import { API_URL } from "@src/utils/constants/api";
+import axios from "axios";
 
 const PollPage = () => {
   const { theme } = useTheme();
   const nav = useNavigation();
   const [answers, setAnswers] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [poll, setPoll] = useState<any>({});
+
+  const routes = useRoute() as any;
+
+  const pollId = routes?.params?.pollId;
+
+  const fetchPoll = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${API_URL}/polls/${pollId}`);
+      setPoll(data.poll);
+      setLoading(false);
+    } catch (err) {
+      alert("Error fetching poll");
+      setLoading(false);
+    }
+  };
 
   function navigateBack() {
     nav.goBack();
   }
-
-  const poll = polls[0];
 
   const updateAnswers = (id: string, value: string | string[]) => {
     setAnswers((prevAnswers) => ({
@@ -27,6 +50,10 @@ const PollPage = () => {
       [id]: value,
     }));
   };
+
+  useEffect(() => {
+    fetchPoll();
+  }, []);
 
   useEffect(() => {
     console.log(answers);
@@ -64,56 +91,66 @@ const PollPage = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.bodyContainer}>
-        <Typography variant="h2">{poll.title}</Typography>
+        {loading ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+        ) : (
+          <>
+            <Typography variant="h2">{poll.title}</Typography>
 
-        <View style={{ height: 20 }} />
+            <View style={{ height: 20 }} />
 
-        {poll.questions &&
-          poll.questions.map((item, index) => (
-            <View
-              key={index}
-              style={{
-                marginTop: index === 0 ? 0 : 15,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography variant="h3" style={{ flex: 1 }}>
-                  {item.title}
-                </Typography>
-              </View>
+            {poll.questions &&
+              poll.questions.map((item, index) => (
+                <View
+                  key={index}
+                  style={{
+                    marginTop: index === 0 ? 0 : 15,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography variant="h3" style={{ flex: 1 }}>
+                      {item.question}
+                    </Typography>
+                  </View>
 
-              <View style={{ height: 10 }} />
+                  <View style={{ height: 10 }} />
 
-              {item.inputType === "radio" && item.options && (
-                <Radio
-                  qid={item.id}
-                  options={item.options}
-                  onChange={updateAnswers}
-                />
-              )}
+                  {item.answerType === "radio" && item.options && (
+                    <Radio
+                      qid={item.id}
+                      options={item.options}
+                      onChange={updateAnswers}
+                    />
+                  )}
 
-              {item.inputType === "checkbox" && item.options && (
-                <Checkbox
-                  qid={item.id}
-                  options={item.options}
-                  onChange={updateAnswers}
-                />
-              )}
+                  {item.answerType === "checkbox" && item.options && (
+                    <Checkbox
+                      qid={item.id}
+                      options={item.options}
+                      onChange={updateAnswers}
+                    />
+                  )}
 
-              {item.inputType === "text" && (
-                <PollTextInput qid={item.id} onChange={updateAnswers} />
-              )}
-            </View>
-          ))}
+                  {item.answerType === "text" && (
+                    <PollTextInput qid={item.id} onChange={updateAnswers} />
+                  )}
+                </View>
+              ))}
 
-        <View style={{ height: 20 }} />
+            <View style={{ height: 20 }} />
 
-        <Button title="Answer" onPress={handleSubmitAnswers} />
+            <Button title="Answer" onPress={handleSubmitAnswers} />
+          </>
+        )}
       </ScrollView>
     </View>
   );

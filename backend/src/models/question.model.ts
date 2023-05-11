@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 
 const questionSchema = new mongoose.Schema(
   {
-    title: {
+    question: {
       type: String,
       required: true,
     },
 
     isRequired: {
       type: Boolean,
-      default: false,
+      default: true,
     },
 
     answerType: {
@@ -20,7 +20,8 @@ const questionSchema = new mongoose.Schema(
 
     options: [
       {
-        type: String,
+        id: String,
+        value: String,
       },
     ],
 
@@ -43,8 +44,17 @@ const questionSchema = new mongoose.Schema(
         ],
       },
     ],
+
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
+
   {timestamps: true},
 );
 
 const Question = mongoose.model('Question', questionSchema);
+
+export default Question;

@@ -38,7 +38,7 @@ const Picker = (props: IPickerProps) => {
                 ...item,
                 answerType: value,
                 options:
-                  value === "Checkbox" || value === "Radio"
+                  value === "checkbox" || value === "radio"
                     ? [
                         {
                           id: "1",

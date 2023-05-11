@@ -7,10 +7,6 @@ const pollSchema = new mongoose.Schema(
       required: true,
     },
 
-    description: {
-      type: String,
-    },
-
     questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}],
 
     voters: [
@@ -30,7 +26,11 @@ const pollSchema = new mongoose.Schema(
       default: Date.now() + 86400000 * 2,
     },
 
-    createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
   {timestamps: true},
 );
