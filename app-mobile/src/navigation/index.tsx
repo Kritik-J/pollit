@@ -1,5 +1,5 @@
 import React from "react";
-import { useColorScheme, View } from "react-native";
+import { ActivityIndicator, useColorScheme, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import useTheme from "@src/hooks/useTheme";
@@ -29,24 +29,20 @@ const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 const Navigation = () => {
-  const { mode } = useTheme();
-
+  const { mode, theme } = useTheme();
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
+  const { isAuth, isLoadingProfile } = useAuth();
+
+  React.useEffect(() => {
+    dispatch(getMyProfile());
+  }, []);
 
   React.useEffect(() => {
     if (colorScheme !== mode) {
       dispatch(setTheme(colorScheme));
     }
   }, [colorScheme]);
-
-  const { isAuth, isLoadingProfile } = useAuth();
-
-  const { theme } = useTheme();
-
-  React.useEffect(() => {
-    dispatch(getMyProfile());
-  }, []);
 
   const Loader = () => {
     return (
@@ -58,7 +54,7 @@ const Navigation = () => {
           backgroundColor: theme.colors.backgroundColor,
         }}
       >
-        <Typography variant="h3">Loading...</Typography>
+        <ActivityIndicator size="large" color="#537FE7" />
       </View>
     );
   };

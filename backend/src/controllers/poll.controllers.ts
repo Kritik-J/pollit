@@ -88,6 +88,76 @@ export const pollResult = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {},
 );
 
-export const answerPoll = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+export const votePoll = catchAsync(
+  async (req: UserRequest, res: Response, next: NextFunction) => {
+    const {id} = req.params;
+    const {votes} = req.body;
+
+    const poll = await Poll.findById(id);
+
+    if (!poll) {
+      return next(new errorHandler('Poll not found', 404));
+    }
+
+    // @ts-ignore
+    const isVoted = poll.voters.includes(req.user._id);
+
+    if (isVoted) {
+      return next(new errorHandler('You already voted', 400));
+    }
+
+    let totalVotes = 0;
+
+    votes.forEach(async (vote: any) => {
+      if (vote.value === '' || vote.value.length === 0) {
+        totalVotes += 1;
+      }
+    });
+
+    if (totalVotes > 0) {
+      return next(new errorHandler('Please fill all fields', 400));
+    }
+
+    const updatedPoll = await Poll.findByIdAndUpdate(
+      id,
+      {
+        $push: {voters: req.user._id},
+      },
+      {new: true},
+    );
+
+    if (!updatedPoll) {
+      return next(new errorHandler('Something went wrong', 500));
+    }
+
+    const updatedQuestions = await Promise.all(
+      votes.map(async (vote: any) => {
+        const updateQuestion = await Question.findByIdAndUpdate(
+          vote.id,
+          {
+            $push: {
+              votes: {
+                voterId: req.user._id,
+                textAnswer: !Array.isArray(vote.value) && vote.value,
+                optionAnswer: Array.isArray(vote.value) && vote.value,
+              },
+            },
+          },
+          {new: true},
+        );
+
+        return updateQuestion;
+      }),
+    );
+
+    if (!updatedQuestions) {
+      return next(new errorHandler('Something went wrong', 500));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      poll: updatedPoll,
+      questions: updatedQuestions,
+    });
+  },
 );

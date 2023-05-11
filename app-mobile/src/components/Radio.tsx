@@ -28,7 +28,7 @@ type IRadioProps = {
 };
 
 const Radio = (props: IRadioProps) => {
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = React.useState<string[]>([]);
   const { theme } = useTheme();
 
   const { qid, options, onChange } = props;
@@ -49,7 +49,13 @@ const Radio = (props: IRadioProps) => {
               },
             ]}
             key={item.id}
-            onPress={() => setSelected(item.value)}
+            onPress={() => {
+              if (selected.includes(item.value)) {
+                setSelected((prev) => prev.filter((i) => i !== item.value));
+              } else {
+                setSelected((prev) => [item.value]);
+              }
+            }}
           >
             <View
               style={[
@@ -59,7 +65,7 @@ const Radio = (props: IRadioProps) => {
                 },
               ]}
             >
-              {selected === item.value && (
+              {selected.includes(item.value) && (
                 <View
                   style={[
                     styles.radioButtonActive,

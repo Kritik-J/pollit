@@ -1,7 +1,7 @@
 import express, {Router} from 'express';
 import {isAuthenticatedUser} from '../middlewares/auth.js';
 import {
-  answerPoll,
+  votePoll,
   createPoll,
   deletePoll,
   getPoll,
@@ -25,6 +25,6 @@ router
 
 router.get('/:id/result', isAuthenticatedUser, pollResult);
 
-router.post('/:id/answer', isAuthenticatedUser, answerPoll);
+router.post('/:id/vote', isAuthenticatedUser, votePoll);
 
 export default router;

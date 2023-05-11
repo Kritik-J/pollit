@@ -144,6 +144,8 @@ export const logout = catchAsync(
 
 export const myProfile = catchAsync(
   async (req: UserRequest, res: Response, next: NextFunction) => {
+    const user = await User.findById(req.user._id);
+
     res.status(200).json({
       status: 'success',
       user: req.user,

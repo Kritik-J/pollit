@@ -1,3 +1,5 @@
+// TODO: Add types
+
 import {
   StyleSheet,
   View,
@@ -16,13 +18,21 @@ import PollTextInput from "@src/components/PollTextInput";
 import Button from "@src/components/Button";
 import { API_URL } from "@src/utils/constants/api";
 import axios from "axios";
+import useAuth from "@src/hooks/useAuth";
+
+type IAnswer = {
+  id: string;
+  value: string | string[];
+};
 
 const PollPage = () => {
   const { theme } = useTheme();
   const nav = useNavigation();
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<IAnswer[]>([]);
   const [loading, setLoading] = useState(false);
   const [poll, setPoll] = useState<any>({});
+  const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
 
   const routes = useRoute() as any;
 
@@ -45,24 +55,36 @@ const PollPage = () => {
   }
 
   const updateAnswers = (id: string, value: string | string[]) => {
-    setAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [id]: value,
-    }));
+    const newAnswers = [...answers];
+
+    const index = newAnswers.findIndex((item) => item.id === id);
+    if (index === -1) {
+      newAnswers.push({ id, value });
+    } else {
+      newAnswers[index] = { id, value };
+    }
+
+    setAnswers(newAnswers);
   };
 
   useEffect(() => {
     fetchPoll();
   }, []);
 
-  useEffect(() => {
-    console.log(answers);
-    console.log("Answers changed");
-  }, [answers]);
+  const handleSubmitAnswers = async () => {
+    try {
+      setSubmitting(true);
 
-  const handleSubmitAnswers = () => {
-    console.log(answers);
-    console.log("Submitting answers");
+      const { data } = await axios.post(`${API_URL}/polls/${pollId}/vote`, {
+        votes: answers,
+      });
+
+      alert("Poll answered successfully");
+      setSubmitting(false);
+    } catch (err: any) {
+      alert(err.response.data.message);
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -95,7 +117,7 @@ const PollPage = () => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <ActivityIndicator size="large" color="#00ff00" />
+            <ActivityIndicator size="large" color="#537FE7" />
           </View>
         ) : (
           <>
@@ -118,7 +140,7 @@ const PollPage = () => {
                     }}
                   >
                     <Typography variant="h3" style={{ flex: 1 }}>
-                      {item.question}
+                      {index + 1}. {item.question}
                     </Typography>
                   </View>
 
@@ -126,7 +148,7 @@ const PollPage = () => {
 
                   {item.answerType === "radio" && item.options && (
                     <Radio
-                      qid={item.id}
+                      qid={item._id}
                       options={item.options}
                       onChange={updateAnswers}
                     />
@@ -134,21 +156,28 @@ const PollPage = () => {
 
                   {item.answerType === "checkbox" && item.options && (
                     <Checkbox
-                      qid={item.id}
+                      qid={item._id}
                       options={item.options}
                       onChange={updateAnswers}
                     />
                   )}
 
                   {item.answerType === "text" && (
-                    <PollTextInput qid={item.id} onChange={updateAnswers} />
+                    <PollTextInput qid={item._id} onChange={updateAnswers} />
                   )}
                 </View>
               ))}
 
             <View style={{ height: 20 }} />
 
-            <Button title="Answer" onPress={handleSubmitAnswers} />
+            <Button
+              title="Answer"
+              onPress={handleSubmitAnswers}
+              loading={submitting}
+              disabled={
+                submitting || (poll.voters && poll.voters.includes(user?._id))
+              }
+            />
           </>
         )}
       </ScrollView>

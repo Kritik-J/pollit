@@ -20,7 +20,6 @@ const HomePage = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -39,7 +38,7 @@ const HomePage = () => {
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <ActivityIndicator size="large" color="#00ff00" />
+          <ActivityIndicator size="large" color="#537FE7" />
         </View>
       ) : (
         <>
