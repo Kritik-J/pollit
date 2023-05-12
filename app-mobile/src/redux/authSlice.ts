@@ -6,6 +6,7 @@ type IUser = {
   _id: string;
   name: string;
   userName: string;
+  avatar: string;
   email: string;
   createdAt: string;
   updatedAt: string;

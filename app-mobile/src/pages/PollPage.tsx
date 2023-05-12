@@ -33,6 +33,7 @@ const PollPage = () => {
   const [poll, setPoll] = useState<any>({});
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
+  const alreadyAnswered = poll.voters && poll.voters.includes(user?._id);
 
   const routes = useRoute() as any;
 
@@ -123,14 +124,14 @@ const PollPage = () => {
           <>
             <Typography variant="h2">{poll.title}</Typography>
 
-            <View style={{ height: 20 }} />
+            <View style={{ height: 30 }} />
 
             {poll.questions &&
               poll.questions.map((item, index) => (
                 <View
                   key={index}
                   style={{
-                    marginTop: index === 0 ? 0 : 15,
+                    marginTop: index === 0 ? 0 : 20,
                   }}
                 >
                   <View
@@ -144,7 +145,7 @@ const PollPage = () => {
                     </Typography>
                   </View>
 
-                  <View style={{ height: 10 }} />
+                  <View style={{ height: 15 }} />
 
                   {item.answerType === "radio" && item.options && (
                     <Radio
@@ -168,15 +169,13 @@ const PollPage = () => {
                 </View>
               ))}
 
-            <View style={{ height: 20 }} />
+            <View style={{ height: 30 }} />
 
             <Button
-              title="Answer"
+              title={alreadyAnswered ? "Already Answered" : "Submit Answers"}
               onPress={handleSubmitAnswers}
               loading={submitting}
-              disabled={
-                submitting || (poll.voters && poll.voters.includes(user?._id))
-              }
+              disabled={submitting || alreadyAnswered}
             />
           </>
         )}

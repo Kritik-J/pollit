@@ -68,6 +68,7 @@ export const register = catchAsync(
       name,
       email,
       userName,
+      avatar: `https://api.dicebear.com/6.x/thumbs/png?seed=${userName}`,
       hash,
       iterations,
       salt,

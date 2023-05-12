@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    avatar: {
+      type: String,
+      default: 'https://api.dicebear.com/6.x/thumbs/png?seed=DefaultAvatar',
+    },
+
     salt: {
       type: String,
       required: true,

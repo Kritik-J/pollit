@@ -11,7 +11,7 @@ import { logoutUser } from "@src/redux/authSlice";
 const ProfilePage = () => {
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
-  const { isAuth, isLoading, user } = useAuth();
+  const { isLoading, user } = useAuth();
 
   return (
     <View
@@ -29,7 +29,7 @@ const ProfilePage = () => {
               padding: 10,
             }}
           >
-            <Avatar uri="https://picsum.photos/200/200" size={54} />
+            <Avatar uri={user.avatar} size={54} />
 
             <View style={{ flex: 1, marginLeft: 15 }}>
               <Typography variant="h3">{user.name}</Typography>
@@ -47,6 +47,7 @@ const ProfilePage = () => {
             onPress={() => {
               dispatch(logoutUser());
             }}
+            height={42}
             loading={isLoading}
           />
         </>

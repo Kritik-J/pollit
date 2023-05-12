@@ -106,6 +106,8 @@ export const votePoll = catchAsync(
       return next(new errorHandler('You already voted', 400));
     }
 
+    // check if all fields are filled
+
     let totalVotes = 0;
 
     votes.forEach(async (vote: any) => {
@@ -117,6 +119,8 @@ export const votePoll = catchAsync(
     if (totalVotes > 0) {
       return next(new errorHandler('Please fill all fields', 400));
     }
+
+    // update poll and questions
 
     const updatedPoll = await Poll.findByIdAndUpdate(
       id,
