@@ -19,6 +19,7 @@ import Button from "@src/components/Button";
 import { API_URL } from "@src/utils/constants/api";
 import axios from "axios";
 import useAuth from "@src/hooks/useAuth";
+import dayjs from "dayjs";
 
 type IAnswer = {
   id: string;
@@ -81,6 +82,7 @@ const PollPage = () => {
       });
 
       alert("Poll answered successfully");
+      setPoll(data.poll);
       setSubmitting(false);
     } catch (err: any) {
       alert(err.response.data.message);
@@ -125,6 +127,28 @@ const PollPage = () => {
             <Typography variant="h2">{poll.title}</Typography>
 
             <View style={{ height: 30 }} />
+
+            <View style={styles.pollDetails}>
+              <Typography variant="body">
+                Started On {dayjs(poll.createdAt).format("DD MMM YYYY hh:mm A")}
+              </Typography>
+
+              <View style={{ height: 5 }} />
+
+              <Typography variant="body">
+                Ends On {dayjs(poll.endsAt).format("DD MMM YYYY hh:mm A")}
+              </Typography>
+
+              <View style={{ height: 5 }} />
+
+              <Typography variant="body">
+                {poll.voters?.length}{" "}
+                {poll.voters?.length === 1 ? "person" : "people"} answered
+                {/* &bull;  */}
+              </Typography>
+            </View>
+
+            <View style={{ height: 20 }} />
 
             {poll.questions &&
               poll.questions.map((item, index) => (
@@ -204,5 +228,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 
-  questionsList: {},
+  pollDetails: {},
 });

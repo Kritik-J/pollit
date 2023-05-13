@@ -24,7 +24,7 @@ const PollTextInput = (props: PollTextInputProps) => {
   const [answer, setAnswer] = React.useState("");
 
   const {
-    borderRadius = 5,
+    borderRadius = 10,
     borderWidth = 1,
     borderColor = theme.colors.textInputBorderColor,
     backgroundColor = theme.colors.textInputBackgroundColor,

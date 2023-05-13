@@ -161,6 +161,9 @@ const LoginPage = () => {
               }}
             />
           }
+          InputProps={{
+            secureTextEntry: !showPassword,
+          }}
           status={errors.password !== "" ? "error" : ""}
         />
         {errors.password !== "" && (

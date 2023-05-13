@@ -12,6 +12,8 @@ import { useAppDispatch } from "@src/hooks/useReduce";
 import Button from "@src/components/Button";
 import axios from "axios";
 import { API_URL } from "@src/utils/constants/api";
+import dayjs from "dayjs";
+import TimestampPicker from "@src/components/TimestampPicker";
 
 const answerTypes = [
   { value: "text" },
@@ -24,6 +26,18 @@ const CreatePollPage = () => {
   const { pollForm } = useForm();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    dispatch(
+      setPollForm({
+        ...pollForm,
+        startAt: new Date().toUTCString(),
+        endAt: new Date(
+          new Date().getTime() + 2 * 24 * 60 * 60 * 1000
+        ).toUTCString(),
+      })
+    );
+  }, []);
 
   // Add new question
 
@@ -205,6 +219,18 @@ const CreatePollPage = () => {
         throw new Error("Please fill all options");
       }
 
+      if (!pollForm.startAt) {
+        throw new Error("Please select start date");
+      }
+
+      if (!pollForm.endAt) {
+        throw new Error("Please select end date");
+      }
+
+      if (dayjs(pollForm.startAt).isAfter(dayjs(pollForm.endAt))) {
+        throw new Error("Start date cannot be after end date");
+      }
+
       const { data } = await axios.post(`${API_URL}/polls`, pollForm);
 
       if (data) {
@@ -215,8 +241,10 @@ const CreatePollPage = () => {
         setPollForm({
           title: "",
           questions: [{ id: 1, question: "", answerType: "" }],
-          startAt: "",
-          endAt: "",
+          startAt: new Date().toUTCString(),
+          endAt: new Date(
+            new Date().getTime() + 2 * 24 * 60 * 60 * 1000
+          ).toUTCString(),
         })
       );
 
@@ -252,7 +280,7 @@ const CreatePollPage = () => {
         }}
       />
 
-      <View style={{ height: 30 }} />
+      <View style={{ height: 20 }} />
 
       {pollForm.questions.map((q, index) => (
         <View
@@ -330,7 +358,35 @@ const CreatePollPage = () => {
         </View>
       ))}
 
-      {/* add date picker here */}
+      <View style={{ height: 20 }} />
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <TimestampPicker
+          placeholder="Start At:"
+          onChange={(value) => {
+            dispatch(setPollForm({ ...pollForm, startAt: value }));
+          }}
+          value={pollForm.startAt}
+        />
+
+        <Typography variant="h4" style={{ marginHorizontal: 10 }}>
+          to
+        </Typography>
+
+        <TimestampPicker
+          placeholder="End At:"
+          onChange={(value) => {
+            dispatch(setPollForm({ ...pollForm, endAt: value }));
+          }}
+          value={pollForm.endAt}
+        />
+      </View>
 
       <View style={{ height: 30 }} />
 

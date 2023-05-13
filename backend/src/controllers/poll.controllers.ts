@@ -4,6 +4,7 @@ import Poll from '../models/poll.model.js';
 import Question from '../models/question.model.js';
 import errorHandler from '../utils/errorHandler.js';
 import {UserRequest} from '../../interfaces.js';
+import {checkNull} from '../utils/validators.js';
 
 export const getPolls = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -21,9 +22,17 @@ export const createPoll = catchAsync(
   async (req: UserRequest, res: Response, next: NextFunction) => {
     const {title, questions, startAt, endAt} = req.body;
 
-    // TODO: add validation for startAt and endAt
-    // TODO: add validation for questions
-    // TODO: add validation for title
+    if (checkNull(title) || checkNull(startAt) || checkNull(endAt)) {
+      return next(new errorHandler('Please fill all fields', 400));
+    }
+
+    if (questions.length < 1) {
+      return next(new errorHandler('Please add at least one question', 400));
+    }
+
+    if (new Date(startAt) > new Date(endAt)) {
+      return next(new errorHandler('Invalid date', 400));
+    }
 
     const questionsIds = await Promise.all(
       questions.map(async (question: any) => {
@@ -128,7 +137,9 @@ export const votePoll = catchAsync(
         $push: {voters: req.user._id},
       },
       {new: true},
-    );
+    )
+      .populate('createdBy')
+      .populate('questions');
 
     if (!updatedPoll) {
       return next(new errorHandler('Something went wrong', 500));

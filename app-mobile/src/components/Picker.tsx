@@ -101,7 +101,7 @@ export default Picker;
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
   },
 
   pickerContainer: {
