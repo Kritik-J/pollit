@@ -20,20 +20,20 @@ import { API_URL } from "@src/utils/constants/api";
 import axios from "axios";
 import useAuth from "@src/hooks/useAuth";
 import dayjs from "dayjs";
-
-type IAnswer = {
-  id: string;
-  value: string | string[];
-};
+import useForm from "@src/hooks/useForm";
+import { setVoteForm } from "@src/redux/formSlice";
+import { useAppDispatch } from "@src/hooks/useReduce";
 
 const PollPage = () => {
   const { theme } = useTheme();
   const nav = useNavigation();
-  const [answers, setAnswers] = useState<IAnswer[]>([]);
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [poll, setPoll] = useState<any>({});
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
+  const { voteForm } = useForm();
+
   const alreadyAnswered = poll.voters && poll.voters.includes(user?._id);
 
   const routes = useRoute() as any;
@@ -57,7 +57,7 @@ const PollPage = () => {
   }
 
   const updateAnswers = (id: string, value: string | string[]) => {
-    const newAnswers = [...answers];
+    const newAnswers = [...voteForm];
 
     const index = newAnswers.findIndex((item) => item.id === id);
     if (index === -1) {
@@ -66,7 +66,7 @@ const PollPage = () => {
       newAnswers[index] = { id, value };
     }
 
-    setAnswers(newAnswers);
+    dispatch(setVoteForm(newAnswers));
   };
 
   useEffect(() => {
@@ -78,11 +78,12 @@ const PollPage = () => {
       setSubmitting(true);
 
       const { data } = await axios.post(`${API_URL}/polls/${pollId}/vote`, {
-        votes: answers,
+        votes: voteForm,
       });
 
       alert("Poll answered successfully");
       setPoll(data.poll);
+      dispatch(setVoteForm([]));
       setSubmitting(false);
     } catch (err: any) {
       alert(err.response.data.message);
@@ -100,9 +101,7 @@ const PollPage = () => {
       <View
         style={[
           styles.headerContainer,
-          {
-            backgroundColor: theme.colors.headerBackgroundColor,
-          },
+          { backgroundColor: theme.colors.headerBackgroundColor },
         ]}
       >
         <AntDesign

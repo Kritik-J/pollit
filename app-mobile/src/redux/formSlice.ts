@@ -18,8 +18,14 @@ type PollFormState = {
   endAt: string;
 };
 
+type VoteFormState = {
+  id: string;
+  value: string | string[];
+}[];
+
 type FormState = {
   pollForm: PollFormState;
+  voteForm: VoteFormState;
 };
 
 const initialState: FormState = {
@@ -35,6 +41,7 @@ const initialState: FormState = {
     startAt: "",
     endAt: "",
   },
+  voteForm: [],
 };
 
 const formSlice = createSlice({
@@ -44,9 +51,12 @@ const formSlice = createSlice({
     setPollForm(state, action) {
       state.pollForm = action.payload;
     },
+    setVoteForm(state, action) {
+      state.voteForm = action.payload;
+    },
   },
 });
 
-export const { setPollForm } = formSlice.actions;
+export const { setPollForm, setVoteForm } = formSlice.actions;
 
 export default formSlice.reducer;
