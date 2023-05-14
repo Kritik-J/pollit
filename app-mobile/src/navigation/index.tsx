@@ -24,6 +24,7 @@ import {
   ProfileFilledIcon,
   ProfileIcon,
 } from "@src/components/Svg";
+import ForgotPasswordPage from "@src/pages/auth/ForgotPasswordPage";
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -110,6 +111,8 @@ export const AuthNavigator = () => {
       <Stack.Screen name="Login" component={LoginPage} />
 
       <Stack.Screen name="Register" component={RegisterPage} />
+
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordPage} />
     </Stack.Navigator>
   );
 };

@@ -50,10 +50,14 @@ const LoginPage = () => {
 
   const { theme } = useTheme();
 
-  const nav = useNavigation();
+  const nav = useNavigation() as any;
 
   function navigateToRegister() {
-    nav.navigate("Register" as never);
+    nav.navigate("Register");
+  }
+
+  function navigateToForgotPassword() {
+    nav.navigate("ForgotPassword");
   }
 
   const dispatch = useAppDispatch();
@@ -62,7 +66,7 @@ const LoginPage = () => {
     if (checkNull(formInput.userNameOrEmail)) {
       setErrors({
         ...errors,
-        userNameOrEmail: "Email is required",
+        userNameOrEmail: "Username or Email is required",
       });
       return;
     }
@@ -109,12 +113,7 @@ const LoginPage = () => {
 
         <View style={{ height: 5 }} />
 
-        <Typography
-          variant="h3"
-          style={{
-            color: "grey",
-          }}
-        >
+        <Typography variant="h3" style={{ color: "grey" }}>
           Login to your account
         </Typography>
 
@@ -181,9 +180,8 @@ const LoginPage = () => {
 
         <Typography
           variant="body"
-          style={{
-            textAlign: "right",
-          }}
+          style={{ textAlign: "right" }}
+          textProps={{ onPress: navigateToForgotPassword }}
         >
           Forgot Password?
         </Typography>
@@ -220,12 +218,7 @@ const LoginPage = () => {
 
         {/* Footer */}
 
-        <Typography
-          variant="body"
-          style={{
-            textAlign: "center",
-          }}
-        >
+        <Typography variant="body" style={{ textAlign: "center" }}>
           Don't have an account?{" "}
           <Text
             style={{ color: theme.colors.highlightColor }}

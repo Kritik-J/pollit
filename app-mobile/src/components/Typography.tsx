@@ -1,14 +1,20 @@
 import useTheme from "@src/hooks/useTheme";
 import React from "react";
-import { Text } from "react-native";
+import { Text, TextProps } from "react-native";
 
-type TypographyProps = {
+interface TypographyProps extends TextProps {
   variant: "h1" | "h2" | "h3" | "h4" | "body";
   children: React.ReactNode;
   style?: any;
-};
+  textProps?: TextProps;
+}
 
-const Typography = ({ variant, children, style }: TypographyProps) => {
+const Typography = ({
+  variant,
+  children,
+  style,
+  textProps,
+}: TypographyProps) => {
   const { theme } = useTheme();
 
   let textStyle = {};
@@ -35,13 +41,8 @@ const Typography = ({ variant, children, style }: TypographyProps) => {
 
   return (
     <Text
-      style={[
-        textStyle,
-        {
-          color: theme.colors.fontColor,
-        },
-        style,
-      ]}
+      style={[textStyle, { color: theme.colors.fontColor }, style]}
+      {...textProps}
     >
       {children}
     </Text>

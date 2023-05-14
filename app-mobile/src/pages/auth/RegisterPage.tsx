@@ -149,12 +149,7 @@ const RegisterPage = () => {
 
         <View style={{ height: 5 }} />
 
-        <Typography
-          variant="h3"
-          style={{
-            color: "grey",
-          }}
-        >
+        <Typography variant="h3" style={{ color: "grey" }}>
           Create an account to get started
         </Typography>
 

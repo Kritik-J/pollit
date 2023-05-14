@@ -153,3 +153,37 @@ export const myProfile = catchAsync(
     });
   },
 );
+
+// forgot password
+
+export const forgotPassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const {userNameOrEmail} = req.body;
+
+    // check if all the required fields are provided
+
+    if (checkNull(userNameOrEmail)) {
+      return next(
+        new ErrorHandler('Please provide all the required fields', 400),
+      );
+    }
+
+    // check if the user exists
+
+    const user = await User.findOne({
+      $or: [{email: userNameOrEmail}, {userName: userNameOrEmail}],
+    });
+
+    // if user does not exist, return error
+
+    if (!user) {
+      return next(new ErrorHandler('User does not exist', 400));
+    }
+
+    // TODO: Complete this function
+
+    res.status(200).json({
+      status: 'success',
+    });
+  },
+);

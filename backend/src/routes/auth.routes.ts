@@ -1,5 +1,6 @@
 import express, {Router} from 'express';
 import {
+  forgotPassword,
   login,
   logout,
   myProfile,
@@ -13,5 +14,6 @@ router.post('/register', register);
 router.post('/login', login);
 router.get('/logout', logout);
 router.get('/profile', isAuthenticatedUser, myProfile);
+router.get('/forgot-password', forgotPassword);
 
 export default router;
