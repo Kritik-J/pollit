@@ -1,4 +1,10 @@
-import { FlatList, StyleSheet, View, ActivityIndicator } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
 import React from "react";
 import PollListItem from "@components/PollListItem";
 import useTheme from "@src/hooks/useTheme";
@@ -34,40 +40,46 @@ const HomePage = () => {
         { backgroundColor: theme.colors.backgroundColor },
       ]}
     >
-      {loading ? (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator size="large" color="#537FE7" />
-        </View>
-      ) : (
-        <>
-          {polls && polls.length > 0 ? (
-            <FlatList
-              data={polls}
-              renderItem={({ item, index }) => (
-                <PollListItem
-                  poll={item}
-                  isLastItem={polls.length === index + 1}
-                  key={index}
-                />
-              )}
-              refreshing={loading}
-              onRefresh={getPolls}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h3">No polls found</Typography>
-            </View>
-          )}
-        </>
-      )}
+      <RefreshControl
+        refreshing={loading}
+        onRefresh={getPolls}
+        colors={[theme.colors.highlightColor]}
+        progressBackgroundColor={theme.colors.bottomTabBarColor}
+        style={{ flex: 1 }}
+      >
+        {loading ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color="#537FE7" />
+          </View>
+        ) : (
+          <>
+            {polls && polls.length > 0 ? (
+              <FlatList
+                data={polls}
+                renderItem={({ item, index }) => (
+                  <PollListItem
+                    poll={item}
+                    isLastItem={polls.length === index + 1}
+                    key={index}
+                  />
+                )}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h3">No polls found</Typography>
+              </View>
+            )}
+          </>
+        )}
+      </RefreshControl>
     </View>
   );
 };
