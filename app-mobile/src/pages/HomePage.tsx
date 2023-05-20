@@ -8,7 +8,7 @@ import {
 import React from "react";
 import PollListItem from "@components/PollListItem";
 import useTheme from "@src/hooks/useTheme";
-import { API_URL } from "@src/utils/constants/api";
+import { apiURL } from "@src/utils/constants/api";
 import axios from "axios";
 import Typography from "@src/components/Typography";
 
@@ -20,7 +20,7 @@ const HomePage = () => {
   const getPolls = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${API_URL}/polls`);
+      const { data } = await axios.get(`${apiURL}/polls`);
 
       setPolls(data.polls);
       setLoading(false);

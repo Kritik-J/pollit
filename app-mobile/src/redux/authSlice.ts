@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL } from "@src/utils/constants/api";
+import { apiURL } from "@src/utils/constants/api";
 import axios from "axios";
 
 type IUser = {
@@ -47,7 +47,7 @@ export const registerUser = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const { data } = await axios.post(`${API_URL}/auth/register`, {
+      const { data } = await axios.post(`${apiURL}/auth/register`, {
         name,
         userName,
         email,
@@ -72,7 +72,7 @@ export const loginUser = createAsyncThunk(
   ) => {
     try {
       const { data } = await axios.post(
-        `${API_URL}/auth/login`,
+        `${apiURL}/auth/login`,
 
         {
           userNameOrEmail,
@@ -91,7 +91,7 @@ export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get(`${API_URL}/auth/logout`);
+      const { data } = await axios.get(`${apiURL}/auth/logout`);
 
       if (data.status === "success") {
         return null;
@@ -106,7 +106,7 @@ export const getMyProfile = createAsyncThunk(
   "auth/getMyProfile",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get(`${API_URL}/auth/profile`);
+      const { data } = await axios.get(`${apiURL}/auth/profile`);
 
       return data.user as IUser;
     } catch (error: any) {

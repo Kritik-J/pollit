@@ -16,7 +16,7 @@ import Radio from "@src/components/Radio";
 import Checkbox from "@src/components/Checkbox";
 import PollTextInput from "@src/components/PollTextInput";
 import Button from "@src/components/Button";
-import { API_URL } from "@src/utils/constants/api";
+import { apiURL } from "@src/utils/constants/api";
 import axios from "axios";
 import useAuth from "@src/hooks/useAuth";
 import dayjs from "dayjs";
@@ -43,7 +43,7 @@ const PollPage = () => {
   const fetchPoll = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${API_URL}/polls/${pollId}`);
+      const { data } = await axios.get(`${apiURL}/polls/${pollId}`);
       setPoll(data.poll);
       setLoading(false);
     } catch (err) {
@@ -77,7 +77,7 @@ const PollPage = () => {
     try {
       setSubmitting(true);
 
-      const { data } = await axios.post(`${API_URL}/polls/${pollId}/vote`, {
+      const { data } = await axios.post(`${apiURL}/polls/${pollId}/vote`, {
         votes: voteForm,
       });
 

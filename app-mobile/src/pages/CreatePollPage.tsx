@@ -11,7 +11,7 @@ import { setPollForm } from "@src/redux/formSlice";
 import { useAppDispatch } from "@src/hooks/useReduce";
 import Button from "@src/components/Button";
 import axios from "axios";
-import { API_URL } from "@src/utils/constants/api";
+import { apiURL } from "@src/utils/constants/api";
 import dayjs from "dayjs";
 import TimestampPicker from "@src/components/TimestampPicker";
 
@@ -231,7 +231,7 @@ const CreatePollPage = () => {
         throw new Error("Start date cannot be after end date");
       }
 
-      const { data } = await axios.post(`${API_URL}/polls`, pollForm);
+      const { data } = await axios.post(`${apiURL}/polls`, pollForm);
 
       if (data) {
         alert("Poll created successfully");
