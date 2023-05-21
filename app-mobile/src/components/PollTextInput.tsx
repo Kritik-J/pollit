@@ -15,13 +15,12 @@ type PollTextInputProps = {
   InputProps?: any;
   status?: "error" | "success" | "warning" | "info";
   qid: string;
+  value: string;
   onChange: Function;
 };
 
 const PollTextInput = (props: PollTextInputProps) => {
   const { theme } = useTheme();
-
-  const [answer, setAnswer] = React.useState("");
 
   const {
     borderRadius = 10,
@@ -36,12 +35,9 @@ const PollTextInput = (props: PollTextInputProps) => {
     InputProps,
     status,
     qid,
+    value,
     onChange,
   } = props;
-
-  React.useEffect(() => {
-    onChange(qid, answer);
-  }, [answer]);
 
   return (
     <TextInput
@@ -59,9 +55,9 @@ const PollTextInput = (props: PollTextInputProps) => {
         color: fontColor,
         ...inputStyle,
       }}
-      value={answer}
+      value={value}
       onChangeText={(text: string) => {
-        setAnswer(text);
+        onChange(qid, text);
       }}
       keyboardType={keyboardType}
       {...InputProps}

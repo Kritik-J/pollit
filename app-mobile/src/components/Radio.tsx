@@ -3,39 +3,20 @@ import React from "react";
 import Typography from "./Typography";
 import useTheme from "@src/hooks/useTheme";
 
-// const options = [
-//   {
-//     id: 0,
-//     value: "First",
-//   },
-//   {
-//     id: 1,
-//     value: "Second",
-//   },
-//   {
-//     id: 2,
-//     value: "Third",
-//   },
-// ];
-
 type IRadioProps = {
   qid: string;
   options: {
     id: string;
     value: string;
   }[];
+  value: string[];
   onChange: Function;
 };
 
 const Radio = (props: IRadioProps) => {
-  const [selected, setSelected] = React.useState<string[]>([]);
   const { theme } = useTheme();
 
-  const { qid, options, onChange } = props;
-
-  React.useEffect(() => {
-    onChange(qid, selected);
-  }, [selected]);
+  const { qid, options, value, onChange } = props;
 
   return (
     <View>
@@ -50,10 +31,15 @@ const Radio = (props: IRadioProps) => {
             ]}
             key={item.id}
             onPress={() => {
-              if (selected.includes(item.value)) {
-                setSelected((prev) => prev.filter((i) => i !== item.value));
+              if (value.includes(item.value)) {
+                // setSelected((prev) => prev.filter((i) => i !== item.value));
+                onChange(
+                  qid,
+                  value.filter((i) => i !== item.value)
+                );
               } else {
-                setSelected((prev) => [item.value]);
+                // setSelected((prev) => [item.value]);
+                onChange(qid, [item.value]);
               }
             }}
           >
@@ -65,7 +51,7 @@ const Radio = (props: IRadioProps) => {
                 },
               ]}
             >
-              {selected.includes(item.value) && (
+              {value.includes(item.value) && (
                 <View
                   style={[
                     styles.radioButtonActive,

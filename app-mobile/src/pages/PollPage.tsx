@@ -23,18 +23,20 @@ import dayjs from "dayjs";
 import useForm from "@src/hooks/useForm";
 import { setVoteForm } from "@src/redux/formSlice";
 import { useAppDispatch } from "@src/hooks/useReduce";
+import { IPoll } from "interfaces";
 
 const PollPage = () => {
   const { theme } = useTheme();
   const nav = useNavigation();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
-  const [poll, setPoll] = useState<any>({});
+  const [poll, setPoll] = useState<IPoll | null>();
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
   const { voteForm } = useForm();
 
-  const alreadyAnswered = poll.voters && poll.voters.includes(user?._id);
+  const alreadyAnswered =
+    user && poll && poll.voters && poll.voters.includes(user?._id);
 
   const routes = useRoute() as any;
 
@@ -123,83 +125,105 @@ const PollPage = () => {
           </View>
         ) : (
           <>
-            <Typography variant="h2">{poll.title}</Typography>
+            {poll && (
+              <>
+                <Typography variant="h2">{poll.title}</Typography>
 
-            <View style={{ height: 30 }} />
+                <View style={{ height: 30 }} />
 
-            <View style={styles.pollDetails}>
-              <Typography variant="body">
-                Started On {dayjs(poll.createdAt).format("DD MMM YYYY hh:mm A")}
-              </Typography>
+                <View style={styles.pollDetails}>
+                  <Typography variant="body">
+                    Started On{" "}
+                    {dayjs(poll.createdAt).format("DD MMM YYYY hh:mm A")}
+                  </Typography>
 
-              <View style={{ height: 5 }} />
+                  <View style={{ height: 5 }} />
 
-              <Typography variant="body">
-                Ends On {dayjs(poll.endsAt).format("DD MMM YYYY hh:mm A")}
-              </Typography>
+                  <Typography variant="body">
+                    Ends On {dayjs(poll.endAt).format("DD MMM YYYY hh:mm A")}
+                  </Typography>
 
-              <View style={{ height: 5 }} />
+                  <View style={{ height: 5 }} />
 
-              <Typography variant="body">
-                {poll.voters?.length}{" "}
-                {poll.voters?.length === 1 ? "person" : "people"} answered
-                {/* &bull;  */}
-              </Typography>
-            </View>
-
-            <View style={{ height: 20 }} />
-
-            {poll.questions &&
-              poll.questions.map((item, index) => (
-                <View
-                  key={index}
-                  style={{
-                    marginTop: index === 0 ? 0 : 20,
-                  }}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography variant="h3" style={{ flex: 1 }}>
-                      {index + 1}. {item.question}
-                    </Typography>
-                  </View>
-
-                  <View style={{ height: 15 }} />
-
-                  {item.answerType === "radio" && item.options && (
-                    <Radio
-                      qid={item._id}
-                      options={item.options}
-                      onChange={updateAnswers}
-                    />
-                  )}
-
-                  {item.answerType === "checkbox" && item.options && (
-                    <Checkbox
-                      qid={item._id}
-                      options={item.options}
-                      onChange={updateAnswers}
-                    />
-                  )}
-
-                  {item.answerType === "text" && (
-                    <PollTextInput qid={item._id} onChange={updateAnswers} />
-                  )}
+                  <Typography variant="body">
+                    {poll.voters?.length}{" "}
+                    {poll.voters?.length === 1 ? "person" : "people"} answered
+                    {/* &bull;  */}
+                  </Typography>
                 </View>
-              ))}
 
-            <View style={{ height: 30 }} />
+                <View style={{ height: 20 }} />
 
-            <Button
-              title={alreadyAnswered ? "Already Answered" : "Submit Answers"}
-              onPress={handleSubmitAnswers}
-              loading={submitting}
-              disabled={submitting || alreadyAnswered}
-            />
+                {poll.questions &&
+                  poll.questions.map((item, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        marginTop: index === 0 ? 0 : 20,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h3" style={{ flex: 1 }}>
+                          {index + 1}. {item.question}
+                        </Typography>
+                      </View>
+
+                      <View style={{ height: 15 }} />
+
+                      {item.answerType === "radio" && item.options && (
+                        <Radio
+                          qid={item._id}
+                          options={item.options}
+                          value={
+                            (voteForm.find((q) => q.id === item._id)?.value ||
+                              []) as string[]
+                          }
+                          onChange={updateAnswers}
+                        />
+                      )}
+
+                      {item.answerType === "checkbox" && item.options && (
+                        <Checkbox
+                          qid={item._id}
+                          options={item.options}
+                          value={
+                            (voteForm.find((q) => q.id === item._id)?.value ||
+                              []) as string[]
+                          }
+                          onChange={updateAnswers}
+                        />
+                      )}
+
+                      {item.answerType === "text" && (
+                        <PollTextInput
+                          qid={item._id}
+                          value={
+                            (voteForm.find((q) => q.id === item._id)?.value ||
+                              "") as string
+                          }
+                          onChange={updateAnswers}
+                        />
+                      )}
+                    </View>
+                  ))}
+
+                <View style={{ height: 30 }} />
+
+                <Button
+                  title={
+                    alreadyAnswered ? "Already Answered" : "Submit Answers"
+                  }
+                  onPress={handleSubmitAnswers}
+                  loading={submitting}
+                  disabled={submitting || alreadyAnswered ? true : false}
+                />
+              </>
+            )}
           </>
         )}
       </ScrollView>
