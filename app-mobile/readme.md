@@ -29,6 +29,7 @@ This page contains all the polls that are available to the user. They can intera
     <figcaption>Register Page</figcaption>
 </center>
 </figure>
+
 The user can register for the application from this page. They need to provide their details and if properly validated, the user will be registered on the platform.
 
 <figure>
@@ -37,6 +38,7 @@ The user can register for the application from this page. They need to provide t
     <figcaption>Login Page</figcaption>
 </center>
 </figure>
+
 Registered users can log onto the application from this page. If not registered they can also redirect themselves to the registration page from here.
 
 <figure>
@@ -45,6 +47,7 @@ Registered users can log onto the application from this page. If not registered 
     <figcaption>Forgot Password Page</figcaption>
 </center>
 </figure>
+
 Users can reset their password from this page after OTP verification.
 
 ---
@@ -57,6 +60,7 @@ Users can reset their password from this page after OTP verification.
     <figcaption>Create Poll Page</figcaption>
 </center>
 </figure>
+
 The user can create a poll from this page. It provides an interface to select question types and their question. Answer can also be specified. Apart from questions, metadata about the poll like its title and validity can also be declared from here.
 
 <figure>
@@ -65,4 +69,5 @@ The user can create a poll from this page. It provides an interface to select qu
     <figcaption>Vote Poll Page</figcaption>
 </center>
 </figure>
+
 User can vote on polls from here and submit their answers.
