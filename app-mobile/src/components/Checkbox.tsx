@@ -4,39 +4,20 @@ import useTheme from "@src/hooks/useTheme";
 import Typography from "./Typography";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-// const options = [
-//   {
-//     id: 0,
-//     value: "First",
-//   },
-//   {
-//     id: 1,
-//     value: "Second",
-//   },
-//   {
-//     id: 2,
-//     value: "Third",
-//   },
-// ];
-
 type ICheckboxProps = {
   qid: string;
   options: {
     id: string;
     value: string;
   }[];
+  value: string[];
   onChange: Function;
 };
 
 const Checkbox = (props: ICheckboxProps) => {
-  const [selected, setSelected] = React.useState<string[]>([]);
   const { theme } = useTheme();
 
-  const { qid, options, onChange } = props;
-
-  React.useEffect(() => {
-    onChange(qid, selected);
-  }, [selected]);
+  const { qid, options, value, onChange } = props;
 
   return (
     <View>
@@ -51,10 +32,13 @@ const Checkbox = (props: ICheckboxProps) => {
             ]}
             key={item.id}
             onPress={() => {
-              if (selected.includes(item.value)) {
-                setSelected((prev) => prev.filter((i) => i !== item.value));
+              if (value.includes(item.value)) {
+                onChange(
+                  qid,
+                  value.filter((i) => i !== item.value)
+                );
               } else {
-                setSelected((prev) => [...prev, item.value]);
+                onChange(qid, [...value, item.value]);
               }
             }}
           >
@@ -63,13 +47,13 @@ const Checkbox = (props: ICheckboxProps) => {
                 styles.checkbox,
                 {
                   borderColor: theme.colors.checkboxColor,
-                  backgroundColor: selected.includes(item.value)
+                  backgroundColor: value.includes(item.value)
                     ? theme.colors.checkboxColor
                     : "transparent",
                 },
               ]}
             >
-              {selected.includes(item.value) && (
+              {value.includes(item.value) && (
                 <FontAwesome5
                   name="check"
                   size={10}
