@@ -123,7 +123,6 @@ const PollResultPage = () => {
 
                 <View style={{ height: 30 }} />
 
-                {console.log(poll)}
                 <View>
                   <Typography variant="h3">
                     {poll.questions[0].question}
