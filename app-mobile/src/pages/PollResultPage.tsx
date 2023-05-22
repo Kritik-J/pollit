@@ -121,36 +121,42 @@ const PollResultPage = () => {
                   </Typography>
                 </View>
 
-                <View style={{ height: 30 }} />
+                <View style={{ height: 10 }} />
 
-                <View>
-                  <Typography variant="h3">
-                    {poll.questions[0].question}
-                  </Typography>
-                  <FlatList
-                    data={poll.questions[0].votes}
-                    renderItem={({ item, index }) => (
-                      <View
-                        key={index}
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          marginTop: 10,
-                          marginRight: 10,
-                        }}
-                      >
-                        <Typography variant="body">
-                          {item.voterId.userName}
-                        </Typography>
-                        <Typography variant="body">
-                          {poll.questions[0].answerType === "text"
-                            ? item.textAnswer
-                            : item.optionAnswer.join(", ").toString()}
-                        </Typography>
-                      </View>
-                    )}
-                  />
-                </View>
+                {poll.questions &&
+                  poll.questions.map((question: any, index: number) => (
+                    <View key={index} style={{ marginTop: 20 }}>
+                      <Typography variant="h3">{question.question}</Typography>
+
+                      <FlatList
+                        style={{ marginTop: 10 }}
+                        data={question.votes}
+                        renderItem={({ item, index }) => (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              marginTop: 10,
+                            }}
+                          >
+                            <Typography variant="body">
+                              {item.voterId.userName}
+                            </Typography>
+
+                            <Typography
+                              variant="body"
+                              style={{ marginRight: 10 }}
+                            >
+                              {question.answerType === "text"
+                                ? item.textAnswer
+                                : item.optionAnswer.join(", ").toString()}
+                            </Typography>
+                          </View>
+                        )}
+                      />
+                    </View>
+                  ))}
               </>
             )}
           </>
