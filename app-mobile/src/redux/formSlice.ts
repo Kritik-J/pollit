@@ -14,6 +14,7 @@ type PollFormState = {
       }
     ];
   }[];
+  pollType: "public" | "private";
   startAt: string;
   endAt: string;
 };
@@ -40,6 +41,7 @@ const initialState: FormState = {
     ],
     startAt: "",
     endAt: "",
+    pollType: "public",
   },
   voteForm: [],
 };

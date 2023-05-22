@@ -20,9 +20,14 @@ export const getPolls = catchAsync(
 
 export const createPoll = catchAsync(
   async (req: UserRequest, res: Response, next: NextFunction) => {
-    const {title, questions, startAt, endAt} = req.body;
+    const {title, questions, pollType, startAt, endAt} = req.body;
 
-    if (checkNull(title) || checkNull(startAt) || checkNull(endAt)) {
+    if (
+      checkNull(title) ||
+      checkNull(pollType) ||
+      checkNull(startAt) ||
+      checkNull(endAt)
+    ) {
       return next(new errorHandler('Please fill all fields', 400));
     }
 
@@ -53,6 +58,7 @@ export const createPoll = catchAsync(
       title,
       questions: questionsIds,
       createdBy: req.user._id,
+      pollType: pollType,
       startAt,
       endAt,
     });
@@ -70,9 +76,11 @@ export const createPoll = catchAsync(
 
 export const getPoll = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const poll = await Poll.findById(req.params.id)
+    let poll = await Poll.findById(req.params.id)
       .populate('createdBy')
-      .populate('questions');
+      .populate({
+        path: 'questions',
+      });
 
     if (!poll) {
       return next(new errorHandler('Poll not found', 404));
@@ -94,7 +102,26 @@ export const deletePoll = catchAsync(
 );
 
 export const pollResult = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const poll = await Poll.findById(req.params.id)
+      .populate('createdBy')
+      .populate({
+        path: 'questions',
+        populate: {
+          path: 'votes.voterId',
+          select: 'userName',
+        },
+      });
+
+    if (!poll) {
+      return next(new errorHandler('Poll not found', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      poll,
+    });
+  },
 );
 
 export const votePoll = catchAsync(

@@ -14,6 +14,7 @@ import axios from "axios";
 import { apiURL } from "@src/utils/constants/api";
 import dayjs from "dayjs";
 import TimestampPicker from "@src/components/TimestampPicker";
+import Radio from "@src/components/Radio";
 
 const answerTypes = [
   { value: "text" },
@@ -219,6 +220,10 @@ const CreatePollPage = () => {
         throw new Error("Please fill all options");
       }
 
+      if (!pollForm.pollType) {
+        throw new Error("Please select poll type");
+      }
+
       if (!pollForm.startAt) {
         throw new Error("Please select start date");
       }
@@ -241,6 +246,7 @@ const CreatePollPage = () => {
         setPollForm({
           title: "",
           questions: [{ id: 1, question: "", answerType: "" }],
+          pollType: "public",
           startAt: new Date().toUTCString(),
           endAt: new Date(
             new Date().getTime() + 2 * 24 * 60 * 60 * 1000
@@ -387,6 +393,23 @@ const CreatePollPage = () => {
           value={pollForm.endAt}
         />
       </View>
+
+      <View style={{ height: 20 }} />
+
+      <Typography variant="h4" style={{ marginVertical: 10 }}>
+        Poll Type
+      </Typography>
+
+      <Radio
+        onChange={(value: string[]) => {
+          dispatch(setPollForm({ ...pollForm, pollType: value[0] }));
+        }}
+        options={[
+          { id: "1", value: "public" },
+          { id: "2", value: "private" },
+        ]}
+        value={[pollForm.pollType]}
+      />
 
       <View style={{ height: 30 }} />
 

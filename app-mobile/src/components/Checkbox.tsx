@@ -5,19 +5,20 @@ import Typography from "./Typography";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 type ICheckboxProps = {
-  qid: string;
+  qid?: string;
   options: {
     id: string;
     value: string;
   }[];
   value: string[];
+  disabled?: boolean;
   onChange: Function;
 };
 
 const Checkbox = (props: ICheckboxProps) => {
   const { theme } = useTheme();
 
-  const { qid, options, value, onChange } = props;
+  const { qid, options, value, onChange, disabled } = props;
 
   return (
     <View>
@@ -31,14 +32,23 @@ const Checkbox = (props: ICheckboxProps) => {
               },
             ]}
             key={item.id}
+            disabled={disabled}
             onPress={() => {
-              if (value.includes(item.value)) {
-                onChange(
-                  qid,
-                  value.filter((i) => i !== item.value)
-                );
+              if (qid) {
+                if (value.includes(item.value)) {
+                  onChange(
+                    qid,
+                    value.filter((i) => i !== item.value)
+                  );
+                } else {
+                  onChange(qid, [...value, item.value]);
+                }
               } else {
-                onChange(qid, [...value, item.value]);
+                if (value.includes(item.value)) {
+                  onChange(value.filter((i) => i !== item.value));
+                } else {
+                  onChange([...value, item.value]);
+                }
               }
             }}
           >

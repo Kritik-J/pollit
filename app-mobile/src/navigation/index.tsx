@@ -25,6 +25,7 @@ import {
   ProfileIcon,
 } from "@src/components/Svg";
 import ForgotPasswordPage from "@src/pages/auth/ForgotPasswordPage";
+import PollResultPage from "@src/pages/PollResultPage";
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -87,6 +88,7 @@ const Navigation = () => {
             )}
 
             <Stack.Screen name="Poll" component={PollPage} />
+            <Stack.Screen name="PollResult" component={PollResultPage} />
           </>
         )}
       </Stack.Navigator>

@@ -29,4 +29,6 @@ export interface IPoll {
   endAt: string;
   createdAt: string;
   updatedAt: string;
+  createdBy: IUser;
+  pollType: String;
 }

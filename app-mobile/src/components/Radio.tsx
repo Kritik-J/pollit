@@ -4,19 +4,20 @@ import Typography from "./Typography";
 import useTheme from "@src/hooks/useTheme";
 
 type IRadioProps = {
-  qid: string;
+  qid?: string;
   options: {
     id: string;
     value: string;
   }[];
   value: string[];
+  disabled?: boolean;
   onChange: Function;
 };
 
 const Radio = (props: IRadioProps) => {
   const { theme } = useTheme();
 
-  const { qid, options, value, onChange } = props;
+  const { qid, options, value, onChange, disabled } = props;
 
   return (
     <View>
@@ -30,16 +31,23 @@ const Radio = (props: IRadioProps) => {
               },
             ]}
             key={item.id}
+            disabled={disabled}
             onPress={() => {
-              if (value.includes(item.value)) {
-                // setSelected((prev) => prev.filter((i) => i !== item.value));
-                onChange(
-                  qid,
-                  value.filter((i) => i !== item.value)
-                );
+              if (qid) {
+                if (value.includes(item.value)) {
+                  onChange(
+                    qid,
+                    value.filter((i) => i !== item.value)
+                  );
+                } else {
+                  onChange(qid, [item.value]);
+                }
               } else {
-                // setSelected((prev) => [item.value]);
-                onChange(qid, [item.value]);
+                // if (value.includes(item.value)) {
+                //   onChange(value.filter((i) => i !== item.value));
+                // } else {
+                onChange([item.value]);
+                // }
               }
             }}
           >

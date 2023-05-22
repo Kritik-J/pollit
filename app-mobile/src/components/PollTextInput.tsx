@@ -15,6 +15,7 @@ type PollTextInputProps = {
   InputProps?: any;
   status?: "error" | "success" | "warning" | "info";
   qid: string;
+  disabled?: boolean;
   value: string;
   onChange: Function;
 };
@@ -36,6 +37,7 @@ const PollTextInput = (props: PollTextInputProps) => {
     status,
     qid,
     value,
+    disabled,
     onChange,
   } = props;
 
@@ -56,6 +58,7 @@ const PollTextInput = (props: PollTextInputProps) => {
         ...inputStyle,
       }}
       value={value}
+      editable={!disabled}
       onChangeText={(text: string) => {
         onChange(qid, text);
       }}

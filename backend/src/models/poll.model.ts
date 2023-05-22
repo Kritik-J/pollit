@@ -31,6 +31,12 @@ const pollSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+
+    pollType: {
+      type: String,
+      enum: ['public', 'private'],
+      default: 'public',
+    },
   },
   {timestamps: true},
 );

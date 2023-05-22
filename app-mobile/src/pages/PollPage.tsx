@@ -27,7 +27,7 @@ import { IPoll } from "interfaces";
 
 const PollPage = () => {
   const { theme } = useTheme();
-  const nav = useNavigation();
+  const nav = useNavigation() as any;
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [poll, setPoll] = useState<IPoll | null>();
@@ -56,6 +56,12 @@ const PollPage = () => {
 
   function navigateBack() {
     nav.goBack();
+  }
+
+  function redirectToResults() {
+    nav.navigate("PollResult", {
+      pollId,
+    });
   }
 
   const updateAnswers = (id: string, value: string | string[]) => {
@@ -183,6 +189,9 @@ const PollPage = () => {
                             (voteForm.find((q) => q.id === item._id)?.value ||
                               []) as string[]
                           }
+                          disabled={
+                            submitting || alreadyAnswered ? true : false
+                          }
                           onChange={updateAnswers}
                         />
                       )}
@@ -195,6 +204,9 @@ const PollPage = () => {
                             (voteForm.find((q) => q.id === item._id)?.value ||
                               []) as string[]
                           }
+                          disabled={
+                            submitting || alreadyAnswered ? true : false
+                          }
                           onChange={updateAnswers}
                         />
                       )}
@@ -205,6 +217,9 @@ const PollPage = () => {
                           value={
                             (voteForm.find((q) => q.id === item._id)?.value ||
                               "") as string
+                          }
+                          disabled={
+                            submitting || alreadyAnswered ? true : false
                           }
                           onChange={updateAnswers}
                         />
@@ -222,6 +237,27 @@ const PollPage = () => {
                   loading={submitting}
                   disabled={submitting || alreadyAnswered ? true : false}
                 />
+
+                <View style={{ height: 20 }} />
+
+                {/* {poll.pollType === "private"
+                  ? user && user._id === poll.createdBy._id
+                  : true && (
+                      <Button
+                        title={"View Results"}
+                        onPress={redirectToResults}
+                      />
+                    )} */}
+                {poll.pollType === "private" ? (
+                  user && user._id === poll.createdBy._id ? (
+                    <Button
+                      title={"View Results"}
+                      onPress={redirectToResults}
+                    />
+                  ) : null
+                ) : (
+                  <Button title={"View Results"} onPress={redirectToResults} />
+                )}
               </>
             )}
           </>
