@@ -18,7 +18,12 @@ import { Octicons } from "@expo/vector-icons";
 import { useAppDispatch } from "@src/hooks/useReduce";
 import { registerUser, clearError } from "@src/redux/authSlice";
 import useAuth from "@src/hooks/useAuth";
-import { checkEmail, checkLength, checkNull } from "@src/utils/validators";
+import {
+  checkEmail,
+  checkLength,
+  checkNull,
+  checkUsername,
+} from "@src/utils/validators";
 
 const RegisterPage = () => {
   const { theme } = useTheme();
@@ -82,6 +87,14 @@ const RegisterPage = () => {
       setErrors({
         ...errors,
         email: "Email is required",
+      });
+      return;
+    }
+
+    if (checkUsername(formInput.userName)) {
+      setErrors({
+        ...errors,
+        userName: "Username cannot contain special characters",
       });
       return;
     }

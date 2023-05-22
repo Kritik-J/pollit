@@ -5,7 +5,12 @@ import {generateHash, verifyHash} from '../utils/password.js';
 import createSendToken from '../utils/createSendToken.js';
 import ErrorHandler from '../utils/errorHandler.js';
 import {UserRequest} from '../../interfaces';
-import {checkEmail, checkLength, checkNull} from '../utils/validators.js';
+import {
+  checkEmail,
+  checkLength,
+  checkNull,
+  checkUsername,
+} from '../utils/validators.js';
 
 // register user
 
@@ -23,6 +28,13 @@ export const register = catchAsync(
     ) {
       return next(
         new ErrorHandler('Please provide all the required fields', 400),
+      );
+    }
+
+    //check if the username contains any special characters
+    if (checkUsername(userName)) {
+      return next(
+        new ErrorHandler('Username cannot contain special characters', 400),
       );
     }
 

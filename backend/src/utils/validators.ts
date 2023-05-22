@@ -16,6 +16,16 @@ export const checkEmail = (email: string) => {
   return false;
 };
 
+export const checkUsername = (username: string) => {
+  const specialRegex = /[^a-zA-Z0-9]/;
+
+  if (specialRegex.test(username)) {
+    return true;
+  }
+
+  return false;
+};
+
 export const checkLength = (value: string, min?: number, max?: number) => {
   if (min && max && (value.length < min || value.length > max)) {
     return true;
