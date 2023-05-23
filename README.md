@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="/assets/pollit.svg" />
+<img src="/assets/pollit.svg" width="160px" alt="Pollit Logo" />
 
   <h1>Pollit</h1>
 
