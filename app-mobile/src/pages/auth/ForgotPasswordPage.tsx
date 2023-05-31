@@ -57,7 +57,7 @@ const ForgotPasswordPage = () => {
       <AntDesign
         name="arrowleft"
         size={24}
-        color="white"
+        color={theme.colors.fontColor}
         onPress={navigateBack}
       />
 

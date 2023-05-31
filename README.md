@@ -1,12 +1,10 @@
 <div align="center">
-
-<img src="/assets/pollit.svg" width="160px" alt="Pollit Logo" />
-
-  <br/>
-  <p>
-    <strong>Pollit is a simple polling app. It allows users to create polls and vote on them. The app is built with React Native, @reduxjs/toolkit, and Node.js.</strong>
-  </p>
+  <img src="/assets/pollit.svg" width="160px" alt="Pollit Logo" />
 </div>
+
+<p>
+  <strong>Pollit is a simple polling app. It allows users to create polls and vote on them. The app is built with React Native, @reduxjs/toolkit, and Node.js.</strong>
+</p>
 
 ## Installation
 
